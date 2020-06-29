@@ -21,7 +21,7 @@ import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.util.CollectionUtils;
 import com.alibaba.excel.util.StringUtils;
 
-public class ExcelUtil {
+public class ExcelUtils {
 	
 	static private Logger log = null;
 

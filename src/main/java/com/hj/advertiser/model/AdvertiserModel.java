@@ -17,6 +17,7 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	private static final long serialVersionUID = -1235814356280938137L;
 	
 	private String uid;
+	private String auth;
 	
 	@ExcelProperty("名称")
 	private String name;
@@ -128,5 +129,13 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 
 	public void setDetailUrl(String detailUrl) {
 		this.detailUrl = detailUrl;
+	}
+
+	public String getAuth() {
+		return auth;
+	}
+
+	public void setAuth(String auth) {
+		this.auth = auth;
 	}
 }
