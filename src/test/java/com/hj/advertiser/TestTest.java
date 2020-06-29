@@ -3092,6 +3092,7 @@ class TestTest {
 				((JSONObject)object).put("auth", auth);
 			}
 			advertiserList.addAll(jsonArray.toJavaList(AdvertiserModel.class));
+			
 		}
 
 		//调用广告商详情接口, 获取图片

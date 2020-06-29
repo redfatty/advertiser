@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.excel.metadata.BaseRowModel;
@@ -21,8 +23,10 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	
 	@ExcelProperty("名称")
 	private String name;
-	@ExcelProperty("电话")
+	@ExcelProperty("默认电话")
 	private String tel;
+	@ExcelProperty("图片电话")
+	private String imgTel;
 	@ExcelProperty("地址")
 	private String addr; //简要地址信息
 	private String address_norm; //详细地址信息, [湖南省(430000)|PROV|0|][长沙市(430100)|CITY|1|][雨花区(430111)|AREA|1|][朝晖路()|ROAD|1|]与怡园街交叉路口往西约100米(湖南华隆)
@@ -93,6 +97,9 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 		this.navi_update_time = navi_update_time;
 	}
 	public String getTel() {
+		if (StringUtils.isEmpty(tel)) {
+			return "无";
+		}
 		return tel;
 	}
 	public void setTel(String tel) {
@@ -138,4 +145,16 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+
+	public String getImgTel() {
+		if (StringUtils.isEmpty(imgTel)) {
+			return "无或未识别";
+		}
+		return imgTel;
+	}
+
+	public void setImgTel(String imgTel) {
+		this.imgTel = imgTel;
+	}
+	
 }
