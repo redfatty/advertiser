@@ -18,7 +18,8 @@ import com.alibaba.excel.metadata.BaseRowModel;
 public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	private static final long serialVersionUID = -1235814356280938137L;
 	
-	private String uid;
+	private Long advertiserId;
+	private String uid;  //百度地图唯一标识
 	private String auth;
 	
 	@ExcelProperty("名称")
@@ -48,6 +49,18 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 		this.setDisplayImageUrl(ext.getJSONObject("detail_info").getString("image"));
 	}
 	
+	public Long getAdvertiserId() {
+		return advertiserId;
+	}
+
+
+
+	public void setAdvertiserId(Long advertiserId) {
+		this.advertiserId = advertiserId;
+	}
+
+
+
 	public String getAddr() {
 		return addr;
 	}
@@ -155,6 +168,10 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 
 	public void setImgTel(String imgTel) {
 		this.imgTel = imgTel;
+	}
+
+	public JSONObject getExt() {
+		return ext;
 	}
 	
 }

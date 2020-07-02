@@ -3078,7 +3078,7 @@ class TestTest {
 	}
 	
 	@Test
-	void importAdvertiserExcelTest() throws IOException {
+	void exportAdvertiserExcelTest() throws IOException {
 		String changShaPath = "/Users/huangjiong/hjdb/develop/Projects/led-advertiser/src/main/resources/static/adJson/长沙";
 		File changShaDir = new File(changShaPath);
 		File[] listFiles = changShaDir.listFiles();

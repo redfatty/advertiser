@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>广告商</title>
-    <base href="/"/>
+    <base href="/led-advertiser/"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/uploadifive.css">
+<!--     <link rel="stylesheet" href="css/uploadifive.css"> -->
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- 顶部按钮 -->
-            <div class="col-md-4 col-md-offset-8">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">添加</button>
+            <div class="col-md-3">
+            	<button type="button" class="btn btn-primary" id="exportExcel" onclick="">导出Excel</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAdvertiserModal">添加</button>
                 <button type="button" class="btn btn-danger" >删除</button>
             </div>
         </div>
@@ -29,14 +30,13 @@
                             </div>
                         </th>
                         <th>uid</th>
+                        <th>图片</th>
                         <th>名称</th>
                         <th>电话</th>
                         <th>地址</th>
-                        <th>图片</th>
-<!--                         <td>图片</td> -->
                         <th>操作</th>
                     </tr>
-                    <tr th:each="product : ${page.list}">
+                    <tr th:each="advertiser : ${page.list}">
                         <td>
                             <div class="checkbox text-center">
                                 <label>
@@ -44,20 +44,20 @@
                                 </label>
                             </div>
                         </td>
-                        <td th:text="${product.uid}"></td>
-                        <td th:text="${product.name}"></td>
+                        <td th:text="${advertiser.uid}"></td>
+                        <td><img th:width="140" th:height="140" th:src="${advertiser.displayImageUrl}" th:onclick="showImages([[${advertiser}]], 0)"></td>
+                        <td th:text="${advertiser.name}"></td>
                         <td>
-<!--                         <td th:text="'默认电话: ' + ${product.tel} + '<br>' + '图片电话: '"> -->
-                        	<label th:text="'默认电话: ' + ${product.tel}"></label><br>
-                        	<label th:text="'图片电话: ' + ${product.imgTel}"></label>
+<!--                         <td th:text="'默认电话: ' + ${advertiser.tel} + '<br>' + '图片电话: '"> -->
+                        	<label th:text="'默认电话: ' + ${advertiser.tel}"></label><br>
+                        	<label th:text="'图片电话: ' + ${advertiser.imgTel}"></label>
                         </td>
-<!--                         <td th:text="#strings.replace('默认电话: ', ':', ${product.tel})"></td> -->
+<!--                         <td th:text="#strings.replace('默认电话: ', ':', ${advertiser.tel})"></td> -->
                         
-                        <td th:text="${product.addr}"></td>
-                        <td><img th:width="140" th:height="140" th:src="${product.displayImageUrl}" th:onclick="showImages([[${product}]], 0)"></td>
+                        <td th:text="${advertiser.addr}"></td>
                         <td>
-<!--                             <button type="button" class="btn btn-primary btn-xs" th:href="|/product/toUpdate/${product.id}|" data-toggle="modal" data-target="#updateProductModal">修改</button> -->
-<!--                             <button type="button" class="btn btn-danger btn-xs" th:onclick="|/product/del/${product.id}|">删除</button> -->
+<!--                             <button type="button" class="btn btn-primary btn-xs" th:href="|/advertiser/toUpdate/${advertiser.id}|" data-toggle="modal" data-target="#updateAdvertiserModal">修改</button> -->
+<!--                             <button type="button" class="btn btn-danger btn-xs" th:onclick="|/advertiser/del/${advertiser.id}|">删除</button> -->
                         </td>
                     </tr>
                 </table>
@@ -73,7 +73,7 @@
                                 </a>
                             </li>
                             <li th:class="${page.pageNum == num ? 'active' : ''}"  th:each="num : ${page.navigatepageNums}">
-                                <a href="#" th:href="|product/page/${num}/${page.pageSize}|" th:text="${num}">1</a>
+                                <a href="#" th:href="|advertiser/page/${num}/${page.pageSize}|" th:text="${num}">1</a>
                             </li>
 
                             <li>
@@ -91,17 +91,17 @@
     </div>
 
     <!--添加商品-->
-    <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel">
+    <div class="modal fade" id="addAdvertiserModal" tabindex="-1" role="dialog" aria-labelledby="addAdvertiserModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="addProductModalLabel">广告商</h4>
+                    <h4 class="modal-title" id="addAdvertiserModalLabel">广告商</h4>
                     <div><label id="defaultPhone">默认电话: </label></div>
                     <div>
                     	<label id="imgPhone">图片电话: </label>
                     	<input type="text" id="imgPhoneInput" placeholder="请输入图片中的电话"> </input>
-                    	<button type="button" class="btn btn-primary" id="confimUpdateImgPhone" onclick="">修改</button>
+                    	<button type="button" class="btn btn-primary" id="confimUpdateImgPhone">修改</button>
                     </div>
                     <button type="button" class="btn btn-default" id="preImg" onclick="">上一张</button>
                     <button type="button" class="btn btn-default" id="nextImg" onclick="">下一张</button>
@@ -117,7 +117,7 @@
     </div>
 
     <!--更新商品-->
-    <!--<div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog" aria-labelledby="updateProductModalLabel">-->
+    <!--<div class="modal fade" id="updateAdvertiserModal" tabindex="-1" role="dialog" aria-labelledby="updateAdvertiserModalLabel">-->
         <!--<div class="modal-dialog" role="document">-->
             <!--<div class="modal-content">-->
             <!--</div>-->
@@ -130,64 +130,116 @@
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
-<script src="js/jquery.uploadifive.min.js"></script>
+<!-- <script src="js/jquery.uploadifive.min.js"></script> -->
+<script src="layui/css/layui.css"></script>
+<script src="layui/layui.js"></script>
 <script type="text/javascript">
     $(function () {
         //清理缓存
-        $("#addProductModal").on("hidden.bs.modal", function () {
+        $("#addAdvertiserModal").on("hidden.bs.modal", function () {
             $(this).removeData("bs.modal");
         });
-
-//         //图片上传
-//         $("#chooseImage").uploadifive({
-//             'buttonText'   : '选择',
-//             'uploadScript' : 'commonUpload',
-//             'fileObjName'  : 'files',
-//             'onUploadComplete' : function(file, resultStr) {
-//                 //resultStr是字符串,要转json
-//                 debugger
-//                 var result = JSON.parse(resultStr);
-//                 if(result.errno == 1){
-//                 }else{
-//                     var imgUrl = result.data[0];
-//                     debugger
-//                     $("#showImage").attr("src",imgUrl);
-//                     $("#image").val(imgUrl);
-//                 }
-//             }
-//         })
+        
+        $("#exportExcel").click(function() {
+// 	   		$.ajax({
+// 		        type : "POST",
+// 		        async: false,
+// // 		        contentType: "application/json;charset=UTF-8",
+// 		        url : "exportAdvertiserExcel",
+// // 		        data : JSON.stringify(null),
+// 		        //请求成功
+// 		        success : function(result) {
+// 		        	if (result.code == 1) {
+// 		        		alert("导出Excel成功");
+// 		        	} else {
+// 		        		alert("导出Excel失败: " + JSON.stringify(result));
+// 		        	}
+// 		        },
+// 		        error : function(e){
+// 		        	alert("导出Excel失败:" + JSON.stringify(e));
+// // 		            console.log(e.status);
+// // 		            console.log(e.responseText);
+// 		        }
+// 	    	});
+	   		
+	   		var url = "exportAdvertiserExcel";
+	   		var xhr = new XMLHttpRequest();
+	   		xhr.open('GET', url, true);//get请求，请求地址，是否异步
+	   		xhr.responseType = "blob";    // 返回类型blob
+	   		xhr.onload = function () {// 请求完成处理函数
+	   			var obj = this;
+	   			if (this.status === 200) {
+	   				var blob = this.response;// 获取返回值
+	   				var a = document.createElement('a');
+	   				var filename = this.getResponseHeader("filename");
+	   				filename = decodeURI(filename);
+	   				a.download = filename;
+	   				a.href=window.URL.createObjectURL(blob);
+	   				a.click();
+	   		    }
+	   		};
+	   		// 发送ajax请求
+	   		xhr.send();
+        });
+        
+        
     })
     
     var showIndex = 0;
+    var currentAdvertiser;
     
+    // 弹出一个模态框显示广告商详情图片
     function showImages(advertiser, initIndex) {
+    	currentAdvertiser = advertiser;
+    	showIndex = initIndex;
     	//弹出模态框
-    	$('#addProductModal').modal();
+    	$('#addAdvertiserModal').modal();
     	//广告商标题
-    	$('#addProductModalLabel').html(advertiser.name);
+    	$('#addAdvertiserModalLabel').html(advertiser.name);
     	//默认电话
     	$('#defaultPhone').html("默认电话: " + advertiser.tel);
     	//图片电话
     	$('#imgPhoneInput').val(advertiser.imgTel === "无或未识别" ? null : advertiser.imgTel);
-    	//图片
-    	showIndex = initIndex;
-    	$("#showImage").attr('src',advertiser.imageUrls[showIndex]);
+    	$("#showImage").attr('src',advertiser.imageUrls[initIndex]);
+    	
+    	$("#preImg").prop("onclick",null).off("click");//jQuery1.7+
     	$("#preImg").click(function() {
     		switchImg(false, advertiser);
-//     		showIndex--;
-//     		if (showIndex == -1) {
-//     			showIndex = advertiser.imageUrls.length - 1;
-//     		}
-//     		$("#showImage").attr('src',advertiser.imageUrls[showIndex]);
     	});
+    	
+    	$("#nextImg").prop("onclick",null).off("click");//jQuery1.7+
     	$("#nextImg").click(function() {
     		switchImg(true, advertiser);
-//     		showIndex++;
-//     		if (showIndex == advertiser.imageUrls.length) {
-//     			showIndex = 0;
-//     		}
-//     		$("#showImage").attr('src',advertiser.imageUrls[showIndex]);
     	});
+    	
+    	//确认修改图片电话
+    	$("#confimUpdateImgPhone").prop("onclick",null).off("click");//jQuery1.7+
+       	$("#confimUpdateImgPhone").click(function() {
+       		var param = {"advertiserId": currentAdvertiser.advertiserId, "imgPhone": $("#imgPhoneInput").val()};
+	   		$.ajax({
+		        //请求方式
+		        type : "POST",
+		        async: false,
+		        contentType: "application/json;charset=UTF-8",
+		        url : "updateImgPhone",
+		        data : JSON.stringify(param),
+		        //请求成功
+		        success : function(result) {
+		        	if (result.code == 1) {
+		        		alert("修改成功");
+		        	} else {
+		        		alert("修改失败: " + JSON.stringify(result));
+		        	}
+		        	
+		        },
+		        error : function(e){
+		        	alert("修改失败:" + JSON.stringify(e));
+// 		            console.log(e.status);
+// 		            console.log(e.responseText);
+		        }
+	    	});
+    	});
+    	
     }
     
     //TODO 切换图片有偶现bug, 待解决
