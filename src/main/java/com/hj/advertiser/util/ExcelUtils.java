@@ -21,6 +21,11 @@ import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.util.CollectionUtils;
 import com.alibaba.excel.util.StringUtils;
 
+/**
+ * EeasyExcel工具类
+ * @author huangjiong
+ *
+ */
 public class ExcelUtils {
 	
 	static private Logger log = null;

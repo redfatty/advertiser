@@ -88,11 +88,11 @@ public class WebViewController {
 		List<FutureTask<Object>> futureList = new ArrayList<>(advertiserList.size());
 		for (AdvertiserModel advertiserModel : advertiserList) {
 			
-			advertiserModel.setImageUrls(new ArrayList<>());
-			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/d6ca7bcb0a46f21f9c147c87fd246b600d33aec5.jpg");
-			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/7a899e510fb30f24dc3fe23cc695d143ad4b0363.jpg");
-			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/7c1ed21b0ef41bd56b79dcac5fda81cb39db3dbb.jpg");
-			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/2fdda3cc7cd98d10d6d8aeab2d3fb80e7bec9018.jpg");
+//			advertiserModel.setImageUrls(new ArrayList<>());
+//			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/d6ca7bcb0a46f21f9c147c87fd246b600d33aec5.jpg");
+//			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/7a899e510fb30f24dc3fe23cc695d143ad4b0363.jpg");
+//			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/7c1ed21b0ef41bd56b79dcac5fda81cb39db3dbb.jpg");
+//			advertiserModel.getImageUrls().add("https://taojin-his.cdn.bcebos.com/2fdda3cc7cd98d10d6d8aeab2d3fb80e7bec9018.jpg");
 			
 //			if (advertiserList.indexOf(advertiserModel) == 0) {
 //				break;

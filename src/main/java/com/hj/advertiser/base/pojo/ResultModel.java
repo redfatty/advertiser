@@ -2,11 +2,11 @@ package com.hj.advertiser.base.pojo;
 
 import java.util.UUID;
 
-public class ResultModel {
+public class ResultModel<T> {
 	private boolean success;
 	private int code;
 	private String msg;
-	private Object data;
+	private T data;
 	private UUID operationId;
 	
 	public ResultModel() {
@@ -14,7 +14,7 @@ public class ResultModel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResultModel(int code, String msg, Object data) {
+	public ResultModel(int code, String msg, T data) {
 		super();
 		this.code = code;
 		this.msg = msg;
@@ -42,7 +42,7 @@ public class ResultModel {
 	public Object getData() {
 		return data;
 	}
-	public void setData(Object data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 	public UUID getOperationId() {
