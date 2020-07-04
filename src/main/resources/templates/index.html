@@ -44,8 +44,8 @@
                                 </label>
                             </div>
                         </td>
-                        <td th:text="${advertiser.uid}"></td>
-                        <td><img th:width="140" th:height="140" th:src="${advertiser.displayImageUrl}" th:onclick="showImages([[${advertiser}]], 0)"></td>
+                        <td th:text="${advertiser.bdUid}"></td>
+                        <td><img th:width="140" th:height="140" th:src="${advertiser.defaultImgUrl}" th:onclick="showImages([[${advertiser}]])"></td>
                         <td th:text="${advertiser.name}"></td>
                         <td>
 <!--                         <td th:text="'默认电话: ' + ${advertiser.tel} + '<br>' + '图片电话: '"> -->
@@ -99,9 +99,9 @@
                     <h4 class="modal-title" id="addAdvertiserModalLabel">广告商</h4>
                     <div><label id="defaultPhone">默认电话: </label></div>
                     <div>
-                    	<label id="imgPhone">图片电话: </label>
-                    	<input type="text" id="imgPhoneInput" placeholder="请输入图片中的电话"> </input>
-                    	<button type="button" class="btn btn-primary" id="confimUpdateImgPhone">修改</button>
+                    	<label id="imgTel">图片电话: </label>
+                    	<input type="text" id="imgTelInput" placeholder="请输入图片中的电话"> </input>
+                    	<button type="button" class="btn btn-primary" id="confimUpdateImgTel">修改</button>
                     </div>
                     <button type="button" class="btn btn-default" id="preImg" onclick="">上一张</button>
                     <button type="button" class="btn btn-default" id="nextImg" onclick="">下一张</button>
@@ -186,12 +186,15 @@
     })
     
     var showIndex = 0;
+    var showImgUrls;
     var currentAdvertiser;
     
     // 弹出一个模态框显示广告商详情图片
-    function showImages(advertiser, initIndex) {
+    function showImages(advertiser) {
     	currentAdvertiser = advertiser;
-    	showIndex = initIndex;
+    	showIndex = 0;
+    	showImgUrls =[advertiser.defaultImgUrl].concat(advertiser.albumImgUrls);
+    	
     	//弹出模态框
     	$('#addAdvertiserModal').modal();
     	//广告商标题
@@ -199,8 +202,8 @@
     	//默认电话
     	$('#defaultPhone').html("默认电话: " + advertiser.tel);
     	//图片电话
-    	$('#imgPhoneInput').val(advertiser.imgTel === "无或未识别" ? null : advertiser.imgTel);
-    	$("#showImage").attr('src',advertiser.imageUrls[initIndex]);
+    	$('#imgTelInput').val(advertiser.imgTel === "无或未识别" ? null : advertiser.imgTel);
+    	$("#showImage").attr('src',showImgUrls[0]);
     	
     	$("#preImg").prop("onclick",null).off("click");//jQuery1.7+
     	$("#preImg").click(function() {
@@ -213,15 +216,15 @@
     	});
     	
     	//确认修改图片电话
-    	$("#confimUpdateImgPhone").prop("onclick",null).off("click");//jQuery1.7+
-       	$("#confimUpdateImgPhone").click(function() {
-       		var param = {"advertiserId": currentAdvertiser.advertiserId, "imgPhone": $("#imgPhoneInput").val()};
+    	$("#confimUpdateImgTel").prop("onclick",null).off("click");//jQuery1.7+
+       	$("#confimUpdateImgTel").click(function() {
+       		var param = {"advertiserId": currentAdvertiser.advertiserId, "imgTel": $("#imgTelInput").val()};
 	   		$.ajax({
 		        //请求方式
 		        type : "POST",
 		        async: false,
 		        contentType: "application/json;charset=UTF-8",
-		        url : "updateImgPhone",
+		        url : "updateImgTel",
 		        data : JSON.stringify(param),
 		        //请求成功
 		        success : function(result) {
@@ -245,12 +248,12 @@
     //TODO 切换图片有偶现bug, 待解决
     function switchImg(isNext, advertiser) {
     	showIndex += (isNext ? 1 : -1);
-    	if (showIndex == advertiser.imageUrls.length) {
+    	if (showIndex == showImgUrls.length) {
 			showIndex = 0;
 		} else if (showIndex == -1) {
-			showIndex = advertiser.imageUrls.length - 1;
+			showIndex = showImgUrls.length - 1;
 		}
-		$("#showImage").attr('src',advertiser.imageUrls[showIndex]);
+		$("#showImage").attr('src',showImgUrls[showIndex]);
     }
     
 </script>

@@ -37,10 +37,10 @@ public class AdvertiserController {
 	 * @param inputModel
 	 * @return
 	 */
-	@RequestMapping("/updateImgPhone")
+	@RequestMapping("/updateImgTel")
 	@ResponseBody
 	public ResultModel updateImgPhone(@RequestBody UpdateAdvertiserImgPhoneInputModel inputModel) {
-		return advertiserService.updateImgPhone(inputModel);
+		return advertiserService.updateImgTel(inputModel);
 		
 	}
 	

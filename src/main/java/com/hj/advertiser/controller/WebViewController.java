@@ -52,10 +52,10 @@ public class WebViewController {
 	 */
 	private Object getList() {
 		
-		boolean debug = false;
+		boolean debug = true;
 		
 		if (debug) {
-			List<AdvertiserModel> selectAdvertiserTest = advertiserService.selectAdvertiserTest();
+			List<AdvertiserModel> selectAdvertiserTest = advertiserService.getAdvertiserListFromLocal();
 			return selectAdvertiserTest;
 		}
 		

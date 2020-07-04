@@ -9,5 +9,12 @@ public interface AdvertiserMapper {
 	
 	public List<AdvertiserModel> selectAdvertiserTest();
 
-	public int updateImgPhone(UpdateAdvertiserImgPhoneInputModel inputModel);
+	public int updateImgTel(UpdateAdvertiserImgPhoneInputModel inputModel);
+	
+	/**
+	 * 插入一条广告商信息
+	 * @param advertiserModel
+	 * @return
+	 */
+	public int insertAdvertiser(AdvertiserModel advertiserModel);
 }

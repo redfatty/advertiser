@@ -6,10 +6,43 @@
   		select * from advertiser
   	</select>
 
-	<update id="updateImgPhone" parameterType="com.hj.advertiser.model.UpdateAdvertiserImgPhoneInputModel">
+	<update id="updateImgTel" parameterType="com.hj.advertiser.model.UpdateAdvertiserImgPhoneInputModel">
 		update advertiser
 		set img_tel = #{imgPhone}
 		where advertiser_id = #{advertiserId}
 	</update>
+	
+	<insert id="insertAdvertiser" parameterType="com.hj.advertiser.model.AdvertiserModel">
+		insert into advertiser(
+			bd_uid,
+			bd_auth,
+			name,
+			tel,
+			img_tel,
+			addr,
+			address_norm,
+			default_img_url,
+			province_name,
+			city_name,
+			area_name,
+			aoi,
+			di_tag
+		)
+		values(
+			#{bdUid},
+			#{bdAuth},
+			#{name},
+			#{tel},
+			#{imgTel},
+			#{addr},
+			#{addressNorm},
+			#{defaultImgUrl},
+			#{provinceName},
+			#{cityName},
+			#{areaName},
+			#{aoi},
+			#{diTag}
+		)
+	</insert>
 
 </mapper>

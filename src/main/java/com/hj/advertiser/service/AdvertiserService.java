@@ -10,6 +10,19 @@ public interface AdvertiserService {
 	
 	public List<AdvertiserModel> selectAdvertiserTest();
 
-	public ResultModel updateImgPhone(UpdateAdvertiserImgPhoneInputModel inputModel);
+	public ResultModel updateImgTel(UpdateAdvertiserImgPhoneInputModel inputModel);
+	
+	/**
+	 * 获取本地保存的广告商信息
+	 * @return
+	 */
+	public List<AdvertiserModel> getAdvertiserListFromLocal();
+	
+	/**
+	 * 插入一条广告商信息
+	 * @param advertiserModel
+	 * @return
+	 */
+	public ResultModel insertAdvertiser(AdvertiserModel advertiserModel);
 
 }

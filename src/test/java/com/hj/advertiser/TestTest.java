@@ -36,15 +36,20 @@ class TestTest {
 		System.out.println(JSON.toJSONString(new Date(1592299464000L), true));
 	}
 	
-	
-	@Test
-	void exportAdvertiserExcelTest() throws IOException {
+	public static List<AdvertiserModel> getAdvertiserModelsFromLocal() {
+
 		String changShaPath = "/Users/huangjiong/hjdb/develop/Projects/led-advertiser/src/main/resources/static/adJson/长沙";
 		File changShaDir = new File(changShaPath);
 		File[] listFiles = changShaDir.listFiles();
 		List<AdvertiserModel> advertiserList = new ArrayList<>();
 		for (File file : listFiles) {
-			String string = FileUtils.readFileToString(file, "UTF-8");
+			String string = null;
+			try {
+				string = FileUtils.readFileToString(file, "UTF-8");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+				continue;
+			}
 			JSONObject parseObject = JSON.parseObject(string);
 			String keywords = parseObject.getJSONObject("result").getString("wd");
 			String auth = parseObject.getJSONObject("result").getString("auth");
@@ -54,16 +59,16 @@ class TestTest {
 				AdvertiserModel advertiserModel = new AdvertiserModel();
 				try {
 					advertiserModel.init(jsonObject, keywords);
+					advertiserList.add(advertiserModel);
 				} catch (Exception e) {
 					System.out.println(jsonObject.getString("uid"));
 					System.out.println("");
 				}
-				advertiserList.add(advertiserModel);
 			}
 		}
 		
 		for (AdvertiserModel advertiserModel : advertiserList) {
-			System.out.println(JSON.toJSONString(advertiserModel, true));
+//			System.out.println(JSON.toJSONString(advertiserModel, true));
 		}
 
 		//调用广告商详情接口, 获取图片
@@ -139,9 +144,15 @@ class TestTest {
 //			}
 //		}
 		
+		return advertiserList;
+	}
+	
+	
+	@Test
+	void exportAdvertiserExcelTest() throws IOException {
+		List<AdvertiserModel> advertiserList = getAdvertiserModelsFromLocal();
 		String filePath = "/Users/huangjiong/Desktop/xx.xlsx";
 		ExcelUtils.writeWithTemplate(filePath ,advertiserList);
-		
 	}
 	
 	

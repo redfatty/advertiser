@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class UpdateAdvertiserImgPhoneInputModel implements Serializable {
 	private static final long serialVersionUID = 2198552330705175503L;
 	private Long advertiserId;
-	private String imgPhone;
+	private String imgTel;
 	
 	public Long getAdvertiserId() {
 		return advertiserId;
@@ -13,11 +13,11 @@ public class UpdateAdvertiserImgPhoneInputModel implements Serializable {
 	public void setAdvertiserId(Long advertiserId) {
 		this.advertiserId = advertiserId;
 	}
-	public String getImgPhone() {
-		return imgPhone;
+	public String getImgTel() {
+		return imgTel;
 	}
-	public void setImgPhone(String imgPhone) {
-		this.imgPhone = imgPhone;
+	public void setImgTel(String imgTel) {
+		this.imgTel = imgTel;
 	}
-	
+
 }
