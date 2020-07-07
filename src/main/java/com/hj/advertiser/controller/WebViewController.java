@@ -52,8 +52,12 @@ public class WebViewController {
 	 */
 	private Object getList() {
 		
-		boolean debug = true;
+		String src = "1";
+		if ("1".equals(src)) {
+			return advertiserService.selectAdvertiserTest();
+		}
 		
+		boolean debug = true;
 		if (debug) {
 			List<AdvertiserModel> selectAdvertiserTest = advertiserService.getAdvertiserListFromLocal();
 			return selectAdvertiserTest;

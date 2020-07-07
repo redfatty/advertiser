@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.metadata.Sheet;
 import com.hj.advertiser.base.pojo.ResultModel;
 import com.hj.advertiser.model.AdvertiserModel;
 import com.hj.advertiser.model.UpdateAdvertiserImgPhoneInputModel;
@@ -82,7 +85,21 @@ public class AdvertiserController {
         response.setHeader("Content-disposition", "attachment;filename=" + fileName);
         //前端导出时文件名fhruf使用这个响应头
         response.setHeader("filename", fileName);
-        EasyExcel.write(response.getOutputStream(), AdvertiserModel.class).sheet("模板").doWrite(selectAdvertiserTest);
+        
+//        Sheet initSheet = new Sheet(1, 0);
+//	    initSheet.setSheetName("sheet");
+//	    //设置自适应宽度
+//	    initSheet.setAutoWidth(Boolean.TRUE);
+//	    initSheet.setClazz(AdvertiserModel.class);
+//	    ExcelWriter writer = EasyExcelFactory.getWriter(response.getOutputStream());
+//	    writer.write(selectAdvertiserTest, initSheet);
+	    
+	    //easyExcel官网的导出方法
+	    EasyExcel.write(response.getOutputStream(), AdvertiserModel.class).sheet("模板").doWrite(selectAdvertiserTest);
+	    
+//        EasyExcel.write(response.getOutputStream(), AdvertiserModel.class).sheet("模板").doWrite(selectAdvertiserTest);
+	    
+	    
 		resultModel.setCode(1);
 		resultModel.setMsg("成功");
 		return resultModel;

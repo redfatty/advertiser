@@ -26,7 +26,7 @@ class LedAdvertiserApplicationTests {
 	void foo() {
 		List<AdvertiserModel> list = advertiserService.getAdvertiserListFromLocal();
 		for (AdvertiserModel advertiserModel : list) {
-			ResultModel resultModel = advertiserService.insertAdvertiser(advertiserModel);
+			ResultModel resultModel = advertiserService.insertOrUpdateAdvertiser(advertiserModel);
 			System.out.println(JSON.toJSONString(resultModel));
 		}
 	}

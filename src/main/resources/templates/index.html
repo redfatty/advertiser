@@ -14,22 +14,22 @@
             <!-- 顶部按钮 -->
             <div class="col-md-3">
             	<button type="button" class="btn btn-primary" id="exportExcel" onclick="">导出Excel</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAdvertiserModal">添加</button>
-                <button type="button" class="btn btn-danger" >删除</button>
+<!--                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAdvertiserModal">添加</button> -->
+<!--                 <button type="button" class="btn btn-danger" >删除</button> -->
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered">
                     <tr>
-                        <th>
-                            <div class="checkbox text-center">
-                                <label>
-                                    <input type="checkbox">全选
-                                </label>
-                            </div>
-                        </th>
-                        <th>uid</th>
+<!--                         <th> -->
+<!--                             <div class="checkbox text-center"> -->
+<!--                                 <label> -->
+<!--                                     <input type="checkbox">全选 -->
+<!--                                 </label> -->
+<!--                             </div> -->
+<!--                         </th> -->
+                        <th>百度uid</th>
                         <th>图片</th>
                         <th>名称</th>
                         <th>电话</th>
@@ -37,13 +37,13 @@
                         <th>操作</th>
                     </tr>
                     <tr th:each="advertiser : ${page.list}">
-                        <td>
-                            <div class="checkbox text-center">
-                                <label>
-                                    <input type="checkbox">
-                                </label>
-                            </div>
-                        </td>
+<!--                         <td> -->
+<!--                             <div class="checkbox text-center"> -->
+<!--                                 <label> -->
+<!--                                     <input type="checkbox"> -->
+<!--                                 </label> -->
+<!--                             </div> -->
+<!--                         </td> -->
                         <td th:text="${advertiser.bdUid}"></td>
                         <td><img th:width="140" th:height="140" th:src="${advertiser.defaultImgUrl}" th:onclick="showImages([[${advertiser}]])"></td>
                         <td th:text="${advertiser.name}"></td>

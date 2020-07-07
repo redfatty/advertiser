@@ -24,5 +24,19 @@ public interface AdvertiserService {
 	 * @return
 	 */
 	public ResultModel insertAdvertiser(AdvertiserModel advertiserModel);
+	
+	/**
+	 * 更新广告商信息
+	 * @param advertiserModel
+	 * @return
+	 */
+	public ResultModel updateSelectiveByBdUid(AdvertiserModel advertiserModel);
+	
+	/**
+	 * 插入或更新一条广告商信息
+	 * @param advertiserModel
+	 * @return
+	 */
+	public ResultModel insertOrUpdateAdvertiser(AdvertiserModel advertiserModel);
 
 }

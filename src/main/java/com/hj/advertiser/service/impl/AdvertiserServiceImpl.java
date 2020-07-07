@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.FutureTask;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -160,20 +161,53 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	 */
 	@Override
 	public ResultModel insertAdvertiser(AdvertiserModel advertiserModel) {
+		ResultModel resultModel = new ResultModel<>();
 		int rows = 0;
 		try {
 			rows = advertiserMapper.insertAdvertiser(advertiserModel);
+			if (rows > 0) {
+				resultModel.setCode(1);
+				resultModel.setMsg("添加成功");
+			} else {
+				resultModel.setCode(0);
+				resultModel.setMsg("添加失败");
+			}
 		} catch (DuplicateKeyException e) {
-			System.err.println(e.getMessage());
-		}
-		ResultModel resultModel = new ResultModel<>();
-		if (rows > 0) {
-			resultModel.setCode(1);
-			resultModel.setMsg("成功");
-		} else {
 			resultModel.setCode(0);
-			resultModel.setMsg("失败");
+			resultModel.setMsg("广告商已经存在:" + advertiserModel.getBdUid() + ", " + ExceptionUtils.getStackTrace(e));
+		} catch (Exception e) {
+			resultModel.setCode(0);
+			resultModel.setMsg("广告商添加异常:" + advertiserModel.getBdUid() + ", " + e.getMessage());
+			System.err.println("广告商添加异常:" + advertiserModel.getBdUid() + ", " + ExceptionUtils.getStackTrace(e));
 		}
 		return resultModel;
 	}
+	
+
+	@Override
+	public ResultModel updateSelectiveByBdUid(AdvertiserModel advertiserModel) {
+		int rows = advertiserMapper.updateSelectiveByBdUid(advertiserModel);
+		ResultModel resultModel = new ResultModel<>();
+		if (rows > 0) {
+			resultModel.setCode(1);
+			resultModel.setMsg("更新成功");
+		} else {
+			resultModel.setCode(2);
+			resultModel.setMsg("更新失败");
+		}
+		return resultModel;
+	}
+
+	@Override
+	public ResultModel insertOrUpdateAdvertiser(AdvertiserModel advertiserModel) {
+		int count = advertiserMapper.selectCountByBdUid(advertiserModel);
+		if (count > 0) {
+			//更新
+			return updateSelectiveByBdUid(advertiserModel);
+		} else {
+			//新增
+			return insertAdvertiser(advertiserModel);
+		}
+	}
+
 }

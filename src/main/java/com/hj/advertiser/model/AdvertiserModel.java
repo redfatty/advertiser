@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -21,12 +22,14 @@ import com.alibaba.excel.metadata.BaseRowModel;
  * @author huangjiong
  *
  */
+@ExcelIgnoreUnannotated
 public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	private static final long serialVersionUID = -1235814356280938137L;
 	
 	private Long advertiserId;
 	
 	//百度地图唯一标识, content[0]->uid
+	@ExcelProperty("百度uid")
 	private String bdUid;  
 	
 	//百度auth, result->auth
@@ -55,7 +58,7 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	private String addressNorm; //详细地址信息, [湖南省(430000)|PROV|0|][长沙市(430100)|CITY|1|][雨花区(430111)|AREA|1|][朝晖路()|ROAD|1|]与怡园街交叉路口往西约100米(湖南华隆)
 	
 	//默认图片, content[0]->ext->detail_info->image
-	@ExcelProperty("默认图片")
+//	@ExcelProperty("默认图片")
 	private String defaultImgUrl;
 	
 	//相册图片集合, content[0]->ext->detail_info->vs_content->infisible->bigdata->photo_album[0]->url
@@ -86,11 +89,6 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 		this.addr = myJsonObj.getString("addr");
 		this.addressNorm = myJsonObj.getString("address_norm");
 		this.defaultImgUrl = myJsonObj.getJSONObject("ext").getJSONObject("detail_info").getString("image");
-		
-		if (bdUid.equals("6402e200f82cba05c909f0d6")) {
-			System.out.println("这个有问题");
-		}
-		
 		// 有些数据有问题, bigdata应该是个对象, 有些错误的返回了一个空数组
 		MyJsonObj invisible = myJsonObj.getJSONObject("ext")
 				.getJSONObject("detail_info")
@@ -108,6 +106,8 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 					albumImgUrls.add(jsonObject.getString("url"));
 				}
 			}
+		} else {
+			System.out.println(this.bdUid + "返回的数据中没有bigdata");
 		}
 		
 		this.provinceName = myJsonObj.getJSONObject("api_admin_info").getString("prov_name");

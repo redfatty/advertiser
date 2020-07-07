@@ -17,4 +17,8 @@ public interface AdvertiserMapper {
 	 * @return
 	 */
 	public int insertAdvertiser(AdvertiserModel advertiserModel);
+	
+	public int selectCountByBdUid(AdvertiserModel advertiserModel);
+	
+	public int updateSelectiveByBdUid(AdvertiserModel advertiserModel);
 }
