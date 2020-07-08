@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import com.alibaba.fastjson.JSON;
@@ -32,8 +33,21 @@ class TestTest {
 	@Test
 	void test() {
 //		fail("Not yet implemented");
-		System.out.println(new Date(1593355370341L));
-		System.out.println(JSON.toJSONString(new Date(1592299464000L), true));
+//		System.out.println(new Date(1593355370341L));
+//		System.out.println(JSON.toJSONString(new Date(1592299464000L), true));
+		
+		String addr1 = "长沙市雨花区洞井中路与木莲东路交叉路口往东南约100米(园康星都荟)";
+		
+		//[湖南省(430000)|PROV|1|][湘潭市(430300)|CITY|1|][湘潭县(430321)|AREA|1|][X018()|ROAD|1|]
+		String addr2 = "[湖南省(430000)|PROV|0|][长沙市(430100)|CITY|1|][雨花区(430111)|AREA|1|][洞井中路()|ROAD|1|]与木莲东路交叉路口往东南约100米(园康星都荟)";
+		int lastIndexOf = addr2.lastIndexOf("]");
+		StringBuilder stringBuilder = new StringBuilder(addr2);
+		stringBuilder.insert(lastIndexOf+1, "[");
+		stringBuilder.replace(0, 1, "");
+		System.out.println(stringBuilder);
+		
+		String addr_detail = "";
+		
 	}
 	
 	public static List<AdvertiserModel> getAdvertiserModelsFromLocal() {
@@ -148,7 +162,7 @@ class TestTest {
 	}
 	
 	
-	@Test
+//	@Test
 	void exportAdvertiserExcelTest() throws IOException {
 		List<AdvertiserModel> advertiserList = getAdvertiserModelsFromLocal();
 		String filePath = "/Users/huangjiong/Desktop/xx.xlsx";
@@ -156,7 +170,7 @@ class TestTest {
 	}
 	
 	
-	@Test
+//	@Test
 	void getAdvertiserDetailTest() throws UnsupportedEncodingException  {
 		String url = "https://map.baidu.com/?uid=3a194c3fc687fb08d4851f6e&ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=2&compat=1&t=1593355370341&auth=5XvI2FNFbVbz1YDRDvHESbS%40Lv74BNCUuxHTBBHHzEHtComRB199Ay1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3GuBLt%40jUIgHUvhgMZSguxzBEHLNRTVtcEWe1GD8zv7u%40ZPuxEtr2%3DGlnDjnCENZHHKKXRRBjnOOAEZzrZZWuN";
 		url = "https://map.baidu.com/?uid=03c79add94190a90d13ce30a&ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=2&compat=1&t=1593386253632&auth=%40bX3x26f9cN%3DwaDQETYbxMKJZ0MHD7T0uxHTBBRLzzTtzljPyBYYxy1uVt1GgvPUDZYOYIZuVt1cv3uVtGccZcuVtPWv3GuztQZ3wWvUvhgMZSguxzBEHLNRTVtcEWe1GD8zv7u%40ZPuLtjAJzhjzgjyBKWEEUOBKWxwAYYK53fy9GUIsxA3wFkk0H3";
@@ -227,7 +241,7 @@ class TestTest {
 	/**
 	 * 将本地的百度搜索结果中的unicode转为中文
 	 */
-	@Test
+//	@Test
 	void bdResultUnicode2Cn() {
 		
 		String changShaPath = "/Users/huangjiong/hjdb/develop/Projects/led-advertiser/src/main/resources/static/adJson/长沙";

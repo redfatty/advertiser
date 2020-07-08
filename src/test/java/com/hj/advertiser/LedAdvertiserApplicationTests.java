@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hj.advertiser.base.constant.AdvertiserTag;
 import com.hj.advertiser.base.pojo.ResultModel;
 import com.hj.advertiser.model.AdvertiserModel;
 import com.hj.advertiser.service.AdvertiserService;
@@ -26,9 +27,11 @@ class LedAdvertiserApplicationTests {
 	void foo() {
 		List<AdvertiserModel> list = advertiserService.getAdvertiserListFromLocal();
 		for (AdvertiserModel advertiserModel : list) {
-//			ResultModel resultModel = advertiserService.insertOrUpdateAdvertiser(advertiserModel);
-//			System.out.println(JSON.toJSONString(advertiserModel));
+			ResultModel resultModel = advertiserService.insertOrUpdateAdvertiser(advertiserModel);
+			System.out.println(JSON.toJSONString(resultModel));
 		}
 	}
+	
+	
 
 }

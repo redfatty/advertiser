@@ -16,7 +16,6 @@
 		<result property="cityName"          column="city_name" ></result>
 		<result property="areaName"          column="area_name" ></result>
 		<result property="aoi"                column="aoi" ></result>
-		<result property="diTag"             column="di_tag" ></result>
 	</resultMap>
 
 	<select id="selectAdvertiserTest" resultMap="advertiserResultMap">
@@ -25,7 +24,7 @@
 
 	<update id="updateImgTel" parameterType="com.hj.advertiser.model.UpdateAdvertiserImgPhoneInputModel">
 		update advertiser
-		set img_tel = #{imgPhone}
+		set img_tel = #{imgTel}
 		where advertiser_id = #{advertiserId}
 	</update>
 
@@ -39,13 +38,12 @@
 			addr,
 			address_norm,
 			default_img_url,
-			<!-- album_img_urls, -->>
+			<!-- album_img_urls, -->
 			
 			province_name,
 			city_name,
 			area_name,
-			aoi,
-			di_tag
+			aoi
 		)
 		values(
 			#{bdUid},
@@ -56,12 +54,11 @@
 			#{addr},
 			#{addressNorm},
 			#{defaultImgUrl},
-			<!-- #{albumImgUrls}, -->>
+			<!-- #{albumImgUrls}, -->
 			#{provinceName},
 			#{cityName},
 			#{areaName},
-			#{aoi},
-			#{diTag}
+			#{aoi}
 		)
 	</insert>
 
@@ -105,9 +102,6 @@
 			<if test="aoi != null and aoi !=''">
 				aoi = #{aoi},
 			</if>
-			<if test="diTag != null and diTag !=''">
-				di_tag = #{diTag},
-			</if>
 		</set>
 		where bd_uid = #{bdUid}
 	</update>
@@ -125,8 +119,7 @@
 			province_name,
 			city_name,
 			area_name,
-			aoi,
-			di_tag
+			aoi
 		)
 		values(
 			#{bdUid},
@@ -140,8 +133,7 @@
 			#{provinceName},
 			#{cityName},
 			#{areaName},
-			#{aoi},
-			#{diTag}
+			#{aoi}
 		)
 		ON DUPLICATE KEY UPDATE
 		<if test="bdAuth != null and bdAuth !=''">

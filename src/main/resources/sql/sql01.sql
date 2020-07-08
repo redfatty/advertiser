@@ -1,3 +1,10 @@
+
+搜索中心点 search_center:   search_center_id
+搜索关键字 search_keywords: search_keywords_id
+搜索参数 search_param: search_param_id, search_center_id, search_keywords_id
+搜索记录 search_record: search_record_id, search_param_id
+搜索结果 search_result: search_result_id, search_record_id, bd_uid, advertiser_name
+
 -- 创建广告商信息表
 CREATE TABLE "public"."advertiser" (
   "advertiser_id" int4 NOT NULL DEFAULT nextval('advertiser_advertiser_id_seq'::regclass),

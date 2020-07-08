@@ -76,8 +76,8 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	//所属地段别称, content[0]->aoi
 	private String aoi;
 	
-	//标签, content[0]->di_tag
-	private String diTag;
+//	//标签, content[0]->di_tag
+//	private String diTag;
 
 	public void init(JSONObject bdItemObj, String keywords, String auth) {
 		MyJsonObj myJsonObj = new MyJsonObj(bdItemObj);
@@ -114,7 +114,6 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 		this.cityName = myJsonObj.getJSONObject("api_admin_info").getString("city_name");
 		this.areaName = myJsonObj.getJSONObject("api_admin_info").getString("area_name");
 		this.aoi = myJsonObj.getString("aoi");
-		this.diTag = myJsonObj.getString("di_tag");
 	}
 	
 	public Long getAdvertiserId() {
@@ -235,14 +234,6 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 
 	public void setAoi(String aoi) {
 		this.aoi = aoi;
-	}
-
-	public String getDiTag() {
-		return diTag;
-	}
-
-	public void setDiTag(String diTag) {
-		this.diTag = diTag;
 	}
 	
 //	private Long navi_update_time;

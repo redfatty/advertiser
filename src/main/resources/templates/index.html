@@ -9,6 +9,7 @@
 <!--     <link rel="stylesheet" href="css/uploadifive.css"> -->
 </head>
 <body>
+
     <div class="container-fluid">
         <div class="row">
             <!-- 顶部按钮 -->
@@ -49,8 +50,8 @@
                         <td th:text="${advertiser.name}"></td>
                         <td>
 <!--                         <td th:text="'默认电话: ' + ${advertiser.tel} + '<br>' + '图片电话: '"> -->
-                        	<label th:text="'默认电话: ' + ${advertiser.tel}"></label><br>
-                        	<label th:text="'图片电话: ' + ${advertiser.imgTel}"></label>
+                        	<label style="font-weight:normal" th:text="'默认电话: ' + ${advertiser.tel == null ? '无' : advertiser.tel}"></label><br>
+                        	<label style="font-weight:normal" th:id="'imgTel' + ${advertiser.bdUid}" th:text="'图片电话: ' + ${advertiser.imgTel == null ? '无或未识别' : advertiser.imgTel}"></label>
                         </td>
 <!--                         <td th:text="#strings.replace('默认电话: ', ':', ${advertiser.tel})"></td> -->
                         
@@ -100,7 +101,7 @@
                     <div><label id="defaultPhone">默认电话: </label></div>
                     <div>
                     	<label id="imgTel">图片电话: </label>
-                    	<input type="text" id="imgTelInput" placeholder="请输入图片中的电话"> </input>
+                    	<input type="text" id="imgTelInput" placeholder="请输入图片中的电话" autocomplete="off"> </input>
                     	<button type="button" class="btn btn-primary" id="confimUpdateImgTel">修改</button>
                     </div>
                     <button type="button" class="btn btn-default" id="preImg" onclick="">上一张</button>
@@ -188,21 +189,32 @@
     var showIndex = 0;
     var showImgUrls;
     var currentAdvertiser;
+    var imgTelMap = new Map();
     
     // 弹出一个模态框显示广告商详情图片
     function showImages(advertiser) {
     	currentAdvertiser = advertiser;
     	showIndex = 0;
-    	showImgUrls =[advertiser.defaultImgUrl].concat(advertiser.albumImgUrls);
+    	showImgUrls =[advertiser.defaultImgUrl];
+    	if (advertiser.albumImgUrls != null && advertiser.albumImgUrls.length > 0) {
+    		showImgUrls = showImgUrls.concat(advertiser.albumImgUrls);
+    	}
     	
     	//弹出模态框
     	$('#addAdvertiserModal').modal();
     	//广告商标题
     	$('#addAdvertiserModalLabel').html(advertiser.name);
     	//默认电话
-    	$('#defaultPhone').html("默认电话: " + advertiser.tel);
+    	$('#defaultPhone').html("默认电话: " + (advertiser.tel === null ? "无" : advertiser.tel));
     	//图片电话
-    	$('#imgTelInput').val(advertiser.imgTel === "无或未识别" ? null : advertiser.imgTel);
+    	var imgTel = imgTelMap.get(advertiser.bdUid);
+    	if (imgTel == undefined) {
+    		imgTel = advertiser.imgTel;
+    	}
+    	if (imgTel == undefined) {
+    		imgTel = null;
+    	}
+    	$('#imgTelInput').val(imgTel);
     	$("#showImage").attr('src',showImgUrls[0]);
     	
     	$("#preImg").prop("onclick",null).off("click");//jQuery1.7+
@@ -229,6 +241,9 @@
 		        //请求成功
 		        success : function(result) {
 		        	if (result.code == 1) {
+		        		//修改
+		        		imgTelMap.set(advertiser.bdUid, param.imgTel);
+		        		$('#imgTel' + advertiser.bdUid).text("图片电话: " + param.imgTel);
 		        		alert("修改成功");
 		        	} else {
 		        		alert("修改失败: " + JSON.stringify(result));
