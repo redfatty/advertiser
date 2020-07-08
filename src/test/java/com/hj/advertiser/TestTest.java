@@ -58,7 +58,7 @@ class TestTest {
 				JSONObject jsonObject = (JSONObject) object;
 				AdvertiserModel advertiserModel = new AdvertiserModel();
 				try {
-					advertiserModel.init(jsonObject, keywords);
+					advertiserModel.init(jsonObject, keywords, auth);
 					advertiserList.add(advertiserModel);
 				} catch (Exception e) {
 					System.out.println(jsonObject.getString("uid"));

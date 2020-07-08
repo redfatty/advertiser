@@ -15,11 +15,13 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.hj.advertiser.base.constant.AdvertiserTag;
 import com.hj.advertiser.base.pojo.ResultModel;
 import com.hj.advertiser.dao.AdvertiserMapper;
 import com.hj.advertiser.model.AdvertiserModel;
 import com.hj.advertiser.model.UpdateAdvertiserImgPhoneInputModel;
 import com.hj.advertiser.service.AdvertiserService;
+import com.hj.advertiser.util.AdTagUtils;
 
 @Service
 public class AdvertiserServiceImpl implements AdvertiserService {
@@ -44,9 +46,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	 */
 	@Override
 	public List<AdvertiserModel> getAdvertiserListFromLocal() {
-
-
-		String changShaPath = "/Users/huangjiong/hjdb/develop/Projects/led-advertiser/src/main/resources/static/adJson/长沙";
+		String changShaPath = "/Users/huangjiong/hjdb/develop/Projects/led-advertiser/src/main/resources/广告商/长沙/雨花区广告";
 		File changShaDir = new File(changShaPath);
 		File[] listFiles = changShaDir.listFiles();
 		List<AdvertiserModel> advertiserList = new ArrayList<>();
@@ -64,19 +64,22 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			JSONArray jsonArray = parseObject.getJSONArray("content");
 			for (Object object : jsonArray) {
 				JSONObject jsonObject = (JSONObject) object;
-				AdvertiserModel advertiserModel = new AdvertiserModel();
+				if (!AdTagUtils.validateTags(jsonObject.getString("name"),//有些标签不相符, 但名称包含广告等词语
+						jsonObject.getString(AdvertiserTag.KEY_TAG),
+						jsonObject.getString(AdvertiserTag.KEY_DI_TAG),
+						jsonObject.getString(AdvertiserTag.KEY_STD_TAG))) {
+					//不是广告商
+					System.out.println("不是广告商: " + jsonObject.getString("name") + "," + jsonObject.getString("uid"));
+					continue;
+				}
 				try {
-					advertiserModel.init(jsonObject, keywords);
+					AdvertiserModel advertiserModel = new AdvertiserModel();
+					advertiserModel.init(jsonObject, keywords, auth);
 					advertiserList.add(advertiserModel);
 				} catch (Exception e) {
-					System.out.println(jsonObject.getString("uid"));
-					System.out.println("");
+					System.out.println("初始化广告商数据模型出错: " + jsonObject.getString("name") + ", " + jsonObject.getString("uid"));
 				}
 			}
-		}
-		
-		for (AdvertiserModel advertiserModel : advertiserList) {
-//			System.out.println(JSON.toJSONString(advertiserModel, true));
 		}
 
 		//调用广告商详情接口, 获取图片

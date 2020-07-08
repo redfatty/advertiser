@@ -79,11 +79,11 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	//标签, content[0]->di_tag
 	private String diTag;
 
-	public void init(JSONObject bdItemObj, String keywords) {
+	public void init(JSONObject bdItemObj, String keywords, String auth) {
 		MyJsonObj myJsonObj = new MyJsonObj(bdItemObj);
 		this.keywords = keywords;
+		this.bdAuth = auth;
 		this.bdUid = myJsonObj.getString("uid");
-		this.bdAuth = myJsonObj.getString("auth");
 		this.name = myJsonObj.getString("name");
 		this.tel = myJsonObj.getString("tel");
 		this.addr = myJsonObj.getString("addr");
