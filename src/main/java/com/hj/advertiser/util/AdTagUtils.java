@@ -29,6 +29,7 @@ public class AdTagUtils {
 					|| tag.indexOf(AdvertiserTag.CHUAN_MEI) > -1
 					|| tag.indexOf(AdvertiserTag.ZHAO_PAI) > -1
 					|| tag.indexOf(AdvertiserTag.DEN_GUANG) > -1
+					|| tag.indexOf(AdvertiserTag.DEN_XIANG) > -1
 					|| tag.indexOf(AdvertiserTag.FA_GUANG) > -1
 					|| tag.indexOf(AdvertiserTag.XIAN_SHI_PING) > -1
 					|| tag.indexOf(AdvertiserTag.PING_MU) > -1

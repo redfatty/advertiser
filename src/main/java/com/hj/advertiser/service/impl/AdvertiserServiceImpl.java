@@ -3,18 +3,21 @@ package com.hj.advertiser.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.FutureTask;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hj.advertiser.base.constant.AdvertiserTag;
 import com.hj.advertiser.base.pojo.ResultModel;
 import com.hj.advertiser.dao.AdvertiserMapper;
@@ -37,18 +40,53 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	@Override
 	public ResultModel updateImgTel(UpdateAdvertiserImgPhoneInputModel inputModel) {
 		int rows = advertiserMapper.updateImgTel(inputModel);
+		String bdUid = inputModel.getBdUid();
+		String imgTel = inputModel.getImgTel();
+		//更新本地json文件
+		try {
+			ClassPathResource classPathResource = new ClassPathResource("广告商");
+			List<File> adFileList = (List<File>) FileUtils.listFiles(classPathResource.getFile(), new String[]{"json"}, true);
+			for (File file : adFileList) {
+				String string = null;
+				boolean didUpadate = false;
+				try {
+					string = FileUtils.readFileToString(file, "UTF-8");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					continue;
+				}
+				JSONObject fileJsonObject = JSON.parseObject(string);
+				JSONArray jsonArray = fileJsonObject.getJSONArray("content");
+				for (Object object : jsonArray) {
+					JSONObject adJsonObject = (JSONObject) object;
+					if (bdUid.equals(adJsonObject.getString("uid"))) {
+						//更新
+						adJsonObject.put("imgTel", imgTel);
+						didUpadate = true;
+					}
+				}
+				if (didUpadate) {
+					fileJsonObject.put("content", jsonArray);
+					//重新写入
+					FileUtils.write(file, JSON.toJSONString(fileJsonObject, SerializerFeature.PrettyFormat, SerializerFeature.SortField, SerializerFeature.MapSortField), "UTF-8");
+				}
+			}
+		} catch (Exception e) {
+			
+		}
 		return new ResultModel(rows > 0 ? 1 : 9999, "更新图片电话失败", null);
 	}
 
 	/**
 	 * 获取本地保存的广告商信息
 	 * @return
+	 * @throws IOException 
 	 */
 	@Override
-	public List<AdvertiserModel> getAdvertiserListFromLocal() {
-		String changShaPath = "/Users/huangjiong/hjdb/develop/Projects/led-advertiser/src/main/resources/广告商/长沙/雨花区广告";
-		File changShaDir = new File(changShaPath);
-		File[] listFiles = changShaDir.listFiles();
+	public List<AdvertiserModel> getAdvertiserListFromLocal() throws IOException {
+		ClassPathResource classPathResource = new ClassPathResource("广告商");
+		File adJsonDir = classPathResource.getFile();
+		List<File> listFiles = (List<File>)FileUtils.listFiles(adJsonDir, new String[]{"json"}, true);
 		List<AdvertiserModel> advertiserList = new ArrayList<>();
 		for (File file : listFiles) {
 			String string = null;
@@ -189,7 +227,13 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 	@Override
 	public ResultModel updateSelectiveByBdUid(AdvertiserModel advertiserModel) {
-		int rows = advertiserMapper.updateSelectiveByBdUid(advertiserModel);
+		int rows = 0;
+		try {
+			rows = advertiserMapper.updateSelectiveByBdUid(advertiserModel);
+		} catch (Exception e) {
+			System.err.println(advertiserModel.getBdUid() + "更新失败:" + ExceptionUtils.getStackTrace(e));
+		}
+		
 		ResultModel resultModel = new ResultModel<>();
 		if (rows > 0) {
 			resultModel.setCode(1);

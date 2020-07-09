@@ -62,7 +62,7 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	private String defaultImgUrl;
 	
 	//相册图片集合, content[0]->ext->detail_info->vs_content->infisible->bigdata->photo_album[0]->url
-	private List<String> albumImgUrls;
+	private String[] albumImgUrls;
 	
 	//省, content[0]->api_admin_info->prov_name
 	private String provinceName;
@@ -86,6 +86,7 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 		this.bdUid = myJsonObj.getString("uid");
 		this.name = myJsonObj.getString("name");
 		this.tel = myJsonObj.getString("tel");
+		this.imgTel = myJsonObj.getString("imgTel");
 		this.addr = myJsonObj.getString("addr");
 		this.addressNorm = myJsonObj.getString("address_norm");
 		this.defaultImgUrl = myJsonObj.getJSONObject("ext").getJSONObject("detail_info").getString("image");
@@ -100,10 +101,15 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 			JSONArray jsonArray = invisible.getJSONObject("bigdata").getJSONArray("photo_album");
 			if (jsonArray != null && jsonArray.size() > 0) {
 				List<String> albumImgUrls = new ArrayList<>();
-				this.albumImgUrls = albumImgUrls;
 				for (Object object : jsonArray) {
 					JSONObject jsonObject = (JSONObject) object;
 					albumImgUrls.add(jsonObject.getString("url"));
+				}
+				this.albumImgUrls = albumImgUrls.toArray(new String[albumImgUrls.size()]);
+				if (this.albumImgUrls instanceof String[]) {
+					System.out.println(this.albumImgUrls);
+				} else {
+					System.out.println(this.albumImgUrls);
 				}
 			}
 		} else {
@@ -189,6 +195,12 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	}
 
 	public String getDefaultImgUrl() {
+//		if (this.bdUid.equals("311a264ad3dd0a3f0aa8d4ba")) {
+//			System.out.println("xxx");
+//		}
+//		if (defaultImgUrl == null || defaultImgUrl.length() < 1) {
+//			return "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594259298235&di=7e85fceafb4f9268b5c711ad055974a7&imgtype=0&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D2774391408%2C3578926483%26fm%3D214%26gp%3D0.jpg";
+//		}
 		return defaultImgUrl;
 	}
 
@@ -196,11 +208,11 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 		this.defaultImgUrl = defaultImgUrl;
 	}
 
-	public List<String> getAlbumImgUrls() {
+	public String[] getAlbumImgUrls() {
 		return albumImgUrls;
 	}
 
-	public void setAlbumImgUrls(List<String> albumImgUrls) {
+	public void setAlbumImgUrls(String[] albumImgUrls) {
 		this.albumImgUrls = albumImgUrls;
 	}
 

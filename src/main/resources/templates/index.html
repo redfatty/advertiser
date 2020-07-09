@@ -106,6 +106,7 @@
                     </div>
                     <button type="button" class="btn btn-default" id="preImg" onclick="">上一张</button>
                     <button type="button" class="btn btn-default" id="nextImg" onclick="">下一张</button>
+                    <label style="font-weight:normal" id="imgCountLabel"></label>
                 </div>
                 <div class="modal-body">
                 	<img src="" id="showImage" class="img-responsive" width="1000px"/>
@@ -199,9 +200,9 @@
     	if (advertiser.albumImgUrls != null && advertiser.albumImgUrls.length > 0) {
     		showImgUrls = showImgUrls.concat(advertiser.albumImgUrls);
     	}
-    	
     	//弹出模态框
     	$('#addAdvertiserModal').modal();
+    	$('#imgCountLabel').html("1/" + showImgUrls.length);
     	//广告商标题
     	$('#addAdvertiserModalLabel').html(advertiser.name);
     	//默认电话
@@ -230,7 +231,11 @@
     	//确认修改图片电话
     	$("#confimUpdateImgTel").prop("onclick",null).off("click");//jQuery1.7+
        	$("#confimUpdateImgTel").click(function() {
-       		var param = {"advertiserId": currentAdvertiser.advertiserId, "imgTel": $("#imgTelInput").val()};
+       		var param = {
+       				"advertiserId": currentAdvertiser.advertiserId, 
+       				"imgTel": $("#imgTelInput").val(),
+       				"bdUid": currentAdvertiser.bdUid
+       				};
 	   		$.ajax({
 		        //请求方式
 		        type : "POST",
@@ -268,6 +273,7 @@
 		} else if (showIndex == -1) {
 			showIndex = showImgUrls.length - 1;
 		}
+    	$('#imgCountLabel').html((showIndex+1) + "/" + showImgUrls.length);
 		$("#showImage").attr('src',showImgUrls[showIndex]);
     }
     

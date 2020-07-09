@@ -1,5 +1,6 @@
 package com.hj.advertiser;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ class LedAdvertiserApplicationTests {
 	}
 	
 	@Test
-	void foo() {
+	void foo() throws IOException {
 		List<AdvertiserModel> list = advertiserService.getAdvertiserListFromLocal();
 		for (AdvertiserModel advertiserModel : list) {
 			ResultModel resultModel = advertiserService.insertOrUpdateAdvertiser(advertiserModel);

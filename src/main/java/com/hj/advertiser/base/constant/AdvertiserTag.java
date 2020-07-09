@@ -28,6 +28,7 @@ public class AdvertiserTag {
 	//以下是自己添加的
 	public static final String ZHAO_PAI = "招牌";
 	public static final String DEN_GUANG = "灯光";
+	public static final String DEN_XIANG = "灯箱";
 	public static final String FA_GUANG = "发光";
 	public static final String XIAN_SHI_PING = "显示屏";
 	public static final String PING_MU = "屏幕";

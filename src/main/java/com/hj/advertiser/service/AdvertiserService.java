@@ -1,5 +1,6 @@
 package com.hj.advertiser.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.hj.advertiser.base.pojo.ResultModel;
@@ -15,8 +16,9 @@ public interface AdvertiserService {
 	/**
 	 * 获取本地保存的广告商信息
 	 * @return
+	 * @throws IOException 
 	 */
-	public List<AdvertiserModel> getAdvertiserListFromLocal();
+	public List<AdvertiserModel> getAdvertiserListFromLocal() throws IOException;
 	
 	/**
 	 * 插入一条广告商信息

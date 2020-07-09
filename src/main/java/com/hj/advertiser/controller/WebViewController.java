@@ -33,7 +33,7 @@ public class WebViewController {
 	private AdvertiserService advertiserService;
 
 	@RequestMapping("/webview")
-	public ModelAndView home(ModelAndView mView) {
+	public ModelAndView home(ModelAndView mView) throws IOException {
 		mView.setViewName("index.html");
 		Map<String, Object> page = new HashMap<>();
 		page.put("list", this.getList());
@@ -49,8 +49,9 @@ public class WebViewController {
 	 */
 	/**
 	 * @return
+	 * @throws IOException 
 	 */
-	private Object getList() {
+	private Object getList() throws IOException {
 		
 		String src = "1";
 		if ("1".equals(src)) {
