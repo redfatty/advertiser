@@ -34,5 +34,15 @@ class LedAdvertiserApplicationTests {
 	}
 	
 	
+	@Test
+	void persistLocalAdvertiserTest() {
+		try {
+			advertiserService.persistLocalAdvertiser("广告商/湘潭");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 }

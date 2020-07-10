@@ -21,6 +21,14 @@ public interface AdvertiserService {
 	public List<AdvertiserModel> getAdvertiserListFromLocal() throws IOException;
 	
 	/**
+	 * 将本地广告商持久化
+	 * @param adRootPath 广告商信息的根目录
+	 * @return
+	 * @throws IOException 
+	 */
+	public ResultModel persistLocalAdvertiser(String adRootPath) throws IOException;
+	
+	/**
 	 * 插入一条广告商信息
 	 * @param advertiserModel
 	 * @return

@@ -1,5 +1,8 @@
 package com.hj.advertiser.base.constant;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 
  * @author huangjiong
@@ -30,8 +33,28 @@ public class AdvertiserTag {
 	public static final String DEN_GUANG = "灯光";
 	public static final String DEN_XIANG = "灯箱";
 	public static final String FA_GUANG = "发光";
+	public static final String LIANG_HUA = "亮化";
 	public static final String XIAN_SHI_PING = "显示屏";
 	public static final String PING_MU = "屏幕";
 	public static final String DA_PING = "大屏";
 	public static final String LED = "LED";
+	
+	public static final List<String> ALL_TAGS = Arrays.asList(
+			GUANG_GAO,
+			TU_WEN,
+			KUAI_YIN,
+			FU_YIN,
+			DA_YIN,
+			WEN_HUA,
+			CHUAN_MEI,
+			ZHAO_PAI,
+			DEN_GUANG,
+			DEN_XIANG,
+			FA_GUANG,
+			LIANG_HUA,
+			XIAN_SHI_PING,
+			PING_MU,
+			DA_PING,
+			LED
+			);
 }
