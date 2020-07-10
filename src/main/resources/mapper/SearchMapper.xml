@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hj.advertiser.dao.SearchMapper">
+
+	<insert id="insertSearchCenter" useGeneratedKeys="true" keyProperty="searchCenterId" parameterType="com.hj.advertiser.model.SearchCenter">
+		insert into search_center(
+			center_uid,
+			center_name,
+			center_addr,
+			center_address_norm,
+			center_area_id,
+			center_area_name,
+			center_city_id,
+			created_by,
+			updated_by,
+			created_time,
+			updated_time
+		)
+		values(
+			#{centerUid},
+			#{centerName},
+			#{centerAddr},
+			#{centerAddressNorm},
+			#{centerAreaId},
+			#{centerAreaName},
+			#{centerCityId},
+			#{createdBy},
+			#{updatedBy},
+			#{createdTime},
+			#{updatedTime}
+		)
+	</insert>
+	
+	<update id="updateSearchCenterSelective" parameterType="com.hj.advertiser.model.SearchCenter">
+		update search_center 
+		<set>
+			<if test="centerName != null and centerName != ''">
+				center_name = #{centerName},
+			</if>
+			<if test="centerAddr != null and centerAddr != ''">
+				center_addr = #{centerAddr},
+			</if>
+			<if test="centerAddressNorm != null and centerAddressNorm != ''">
+				center_address_norm = #{centerAddressNorm},
+			</if>
+			<if test="centerAreaName != null and centerAreaName != ''">
+				center_area_name = #{centerAreaName},
+			</if>
+			<if test="updatedBy != null and updatedBy != ''">
+				updated_by = #{updatedBy},
+			</if>
+			<if test="updatedTime != null">
+				updated_time = #{updatedTime},
+			</if>
+			<if test="updatedTime == null">
+				updated_time = now(),
+			</if>
+		</set>
+		where center_uid = #{centerUid}
+			and center_area_id = #{centerAreaId}
+			and center_city_id = #{centerCityId}
+	</update>
+	
+	<insert id="insertSearchKeywords" useGeneratedKeys="true" keyProperty="searchKeywordsId" parameterType="com.hj.advertiser.model.SearchKeywords">
+		insert into search_keywords(
+			keywords,
+			created_by,
+			updated_by,
+			created_time,
+			updated_time
+		)
+		values(
+			#{keywords},
+			#{createdBy},
+			#{updatedBy},
+			#{createdTime},
+			#{updatedTime}
+		)
+	</insert>
+	
+	<update id="updateSearchKeywordsSelective" parameterType="com.hj.advertiser.model.SearchKeywords">
+		update search_keywords
+		<set>
+			<if test="keywords != null and keywords != ''">
+				keywords = #{keywords},
+			</if>
+			<if test="updatedBy != null and updatedBy != ''">
+				updated_by = #{updatedBy},
+			</if>
+			<if test="updatedTime != null">
+				updated_time = #{updatedTime},
+			</if>
+			<if test="updatedTime == null">
+				updated_time = now(),
+			</if>
+		</set>
+		where search_keywords_uid = #{searchKeywordsId}
+	</update>
+	
+	<insert id="insertSearchAction" useGeneratedKeys="true" keyProperty="searchActionId" parameterType="com.hj.advertiser.model.SearchAction">
+		insert into search_action(
+			search_center_id,
+			search_keywords_id,
+			created_by,
+			created_time
+		)
+		values(
+			#{searchCenterId},
+			#{searchKeywordsId},
+			#{createdBy},
+			#{createdTime}
+		)
+	</insert>
+	
+	<insert id="insertSearchResult" useGeneratedKeys="true" keyProperty="searchResultId" parameterType="com.hj.advertiser.model.SearchResult">
+		insert into search_result(
+			search_action_id,
+			bd_uid,
+			advertiser_name,
+			distance,
+			created_by,
+			created_time
+		)
+		values(
+			#{searchActionId},
+			#{bdUid},
+			#{advertiserName},
+			#{distance},
+			#{createdBy},
+			#{createdTime}
+		)
+	</insert>
+
+</mapper>

@@ -24,6 +24,7 @@ import com.hj.advertiser.base.constant.AdvertiserTag;
 import com.hj.advertiser.base.pojo.MyJsonObj;
 import com.hj.advertiser.base.pojo.ResultModel;
 import com.hj.advertiser.dao.AdvertiserMapper;
+import com.hj.advertiser.dao.SearchMapper;
 import com.hj.advertiser.model.AdvertiserModel;
 import com.hj.advertiser.model.SearchAction;
 import com.hj.advertiser.model.SearchCenter;
@@ -38,6 +39,9 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	
 	@Autowired
 	private AdvertiserMapper advertiserMapper;
+	
+	@Autowired
+	private SearchMapper searchMapper;
 
 	@Override
 	public List<AdvertiserModel> selectAdvertiserTest() {
@@ -289,7 +293,11 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			center.setCreatedTime(new Date());
 			center.setUpdatedTime(new Date());
 			//添加一条搜索中心点,主键回填
-			//...
+			try {
+				searchMapper.insertSearchCenter(center);
+			} catch (DuplicateKeyException e) {
+				searchMapper.updateSearchCenterSelective(center);
+			}
 			
 			//- 搜索关键字
 			String kw = jsonObj.getJSONObject("result").getString("wd");
@@ -304,7 +312,11 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			keywords.setUpdatedBy("黄炯");
 			keywords.setUpdatedTime(new Date());
 			//添加一条搜索关键字,主键回填
-			//...
+			try {
+				searchMapper.insertSearchKeywords(keywords);
+			} catch (DuplicateKeyException e) {
+				searchMapper.updateSearchKeywordsSelective(keywords);
+			}
 			
 			//- 搜索记录
 			SearchAction action = new SearchAction();
@@ -313,7 +325,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			action.setCreatedBy("黄炯");
 			action.setCreatedTime(new Date());
 			//添加一条搜索记录,主键回填
-			//...
+			searchMapper.insertSearchAction(action);
 			
 			//- 搜索结果列表
 			String auth = jsonObj.getJSONObject("result").getString("auth");
@@ -340,6 +352,9 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 					AdvertiserModel advertiserModel = new AdvertiserModel();
 					advertiserModel.init(jsonItem, kw, auth);
 					advertiserList.add(advertiserModel);
+					//添加或更新一条广告商
+					this.insertOrUpdateAdvertiser(advertiserModel);
+					
 					//搜索结果项
 					SearchResult result = new SearchResult();
 					result.setSearchActionId(action.getSearchActionId());
@@ -349,6 +364,8 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 					result.setCreatedBy("黄炯");
 					result.setCreatedTime(new Date());
 					resultList.add(result);
+					//添加一条搜索结果
+					searchMapper.insertSearchResult(result);
 				} catch (Exception e) {
 					System.out.println("初始化广告商数据模型出错: " + jsonItem.getString("name") + ", " + jsonItem.getString("uid"));
 				}
