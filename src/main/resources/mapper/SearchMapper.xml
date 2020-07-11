@@ -4,7 +4,7 @@
 
 	<insert id="insertSearchCenter" useGeneratedKeys="true" keyProperty="searchCenterId" parameterType="com.hj.advertiser.model.SearchCenter">
 		insert into search_center(
-			center_uid,
+			center_bd_uid,
 			center_name,
 			center_addr,
 			center_address_norm,
@@ -17,7 +17,7 @@
 			updated_time
 		)
 		values(
-			#{centerUid},
+			#{centerBdUid},
 			#{centerName},
 			#{centerAddr},
 			#{centerAddressNorm},
@@ -31,7 +31,14 @@
 		)
 	</insert>
 	
-	<update id="updateSearchCenterSelective" parameterType="com.hj.advertiser.model.SearchCenter">
+	<select id="selectSearchCenterByBdUid" resultType="com.hj.advertiser.model.SearchCenter" >
+		select 
+			search_Center_Id as searchCenterId
+		from search_center
+		where center_bd_uid = #{centerBdUid}
+	</select>
+	
+	<update id="updateSearchCenterSelective"  parameterType="com.hj.advertiser.model.SearchCenter">
 		update search_center 
 		<set>
 			<if test="centerName != null and centerName != ''">
@@ -56,10 +63,12 @@
 				updated_time = now(),
 			</if>
 		</set>
-		where center_uid = #{centerUid}
+		where center_bd_uid = #{centerBdUid}
 			and center_area_id = #{centerAreaId}
 			and center_city_id = #{centerCityId}
 	</update>
+	
+	
 	
 	<insert id="insertSearchKeywords" useGeneratedKeys="true" keyProperty="searchKeywordsId" parameterType="com.hj.advertiser.model.SearchKeywords">
 		insert into search_keywords(
@@ -78,6 +87,13 @@
 		)
 	</insert>
 	
+	<select id="selectSearchKeywordsByKeywords" resultType="com.hj.advertiser.model.SearchKeywords" >
+		select 
+			search_Keywords_Id as searchKeywordsId
+		from search_keywords
+		where keywords = #{keywords}
+	</select>
+	
 	<update id="updateSearchKeywordsSelective" parameterType="com.hj.advertiser.model.SearchKeywords">
 		update search_keywords
 		<set>
@@ -94,7 +110,7 @@
 				updated_time = now(),
 			</if>
 		</set>
-		where search_keywords_uid = #{searchKeywordsId}
+		where search_keywords_id = #{searchKeywordsId}
 	</update>
 	
 	<insert id="insertSearchAction" useGeneratedKeys="true" keyProperty="searchActionId" parameterType="com.hj.advertiser.model.SearchAction">

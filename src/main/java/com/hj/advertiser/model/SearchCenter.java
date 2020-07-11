@@ -15,7 +15,7 @@ import com.hj.advertiser.base.pojo.MyJsonObj;
 public class SearchCenter {
 	
 	private Long searchCenterId;
-	private String centerUid;
+	private String centerBdUid;
 	private String centerName;
 	private String centerAddr;
 	private String centerAddressNorm;
@@ -45,7 +45,7 @@ public class SearchCenter {
 				return false;
 			}
 			
-			this.centerUid = poiJsonObj.getString("uid");
+			this.centerBdUid = poiJsonObj.getString("uid");
 			this.centerName = poiJsonObj.getString("name");
 			this.centerAddr = poiJsonObj.getString("addr");
 			this.centerAddressNorm = poiJsonObj.getString("address_norm");
@@ -68,12 +68,15 @@ public class SearchCenter {
 	public void setSearchCenterId(Long searchCenterId) {
 		this.searchCenterId = searchCenterId;
 	}
-	public String getCenterUid() {
-		return centerUid;
+	
+	public String getCenterBdUid() {
+		return centerBdUid;
 	}
-	public void setCenterUid(String centerUid) {
-		this.centerUid = centerUid;
+
+	public void setCenterBdUid(String centerBdUid) {
+		this.centerBdUid = centerBdUid;
 	}
+
 	public String getCenterName() {
 		return centerName;
 	}

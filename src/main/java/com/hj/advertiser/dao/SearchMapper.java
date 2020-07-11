@@ -18,5 +18,9 @@ public interface SearchMapper {
 	public int insertSearchAction(SearchAction action);
 	
 	public int insertSearchResult(SearchResult result);
+	
+	public SearchCenter selectSearchCenterByBdUid(String centerBdUid);
+	
+	public SearchKeywords selectSearchKeywordsByKeywords(String keywords);
 
 }

@@ -73,6 +73,24 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 	//区, content[0]->api_admin_info->area_name
 	private String areaName;
 	
+	//通用省编码, 暂无
+	private String provinceCode;
+	
+	//通用市编码, content[0]->admin_info->city_id
+	private String cityCode;
+	
+	//通用区县编码, content[0]->admin_info->area_id
+	private String areaCode;
+	
+	//百度省编码, content[0]->api_admin_info->prov_code
+	private String provinceCodeBd;
+	
+	//通用市编码, content[0]->api_admin_info->city_code
+	private String cityCodeBd;
+	
+	//通用区县编码, content[0]->api_admin_info->area_code
+	private String areaCodeBd;
+	
 	//所属地段别称, content[0]->aoi
 	private String aoi;
 	
@@ -116,6 +134,15 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 			System.out.println(this.bdUid + "返回的数据中没有bigdata");
 		}
 		
+		//通用省市区编码
+		this.provinceCode = myJsonObj.getJSONObject("admin_info").getString("prov_id");//暂无
+		this.cityCode = myJsonObj.getJSONObject("admin_info").getString("city_id");
+		this.areaCode = myJsonObj.getJSONObject("admin_info").getString("area_id");
+		//百度省市区编码
+		this.provinceCodeBd = myJsonObj.getJSONObject("api_admin_info").getString("prov_code");
+		this.cityCodeBd = myJsonObj.getJSONObject("api_admin_info").getString("city_code");
+		this.areaCodeBd = myJsonObj.getJSONObject("api_admin_info").getString("area_code");
+		//省市区名称
 		this.provinceName = myJsonObj.getJSONObject("api_admin_info").getString("prov_name");
 		this.cityName = myJsonObj.getJSONObject("api_admin_info").getString("city_name");
 		this.areaName = myJsonObj.getJSONObject("api_admin_info").getString("area_name");
@@ -246,6 +273,54 @@ public class AdvertiserModel extends  BaseRowModel implements Serializable {
 
 	public void setAoi(String aoi) {
 		this.aoi = aoi;
+	}
+
+	public String getProvinceCode() {
+		return provinceCode;
+	}
+
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
+	public String getProvinceCodeBd() {
+		return provinceCodeBd;
+	}
+
+	public void setProvinceCodeBd(String provinceCodeBd) {
+		this.provinceCodeBd = provinceCodeBd;
+	}
+
+	public String getCityCodeBd() {
+		return cityCodeBd;
+	}
+
+	public void setCityCodeBd(String cityCodeBd) {
+		this.cityCodeBd = cityCodeBd;
+	}
+
+	public String getAreaCodeBd() {
+		return areaCodeBd;
+	}
+
+	public void setAreaCodeBd(String areaCodeBd) {
+		this.areaCodeBd = areaCodeBd;
 	}
 	
 //	private Long navi_update_time;

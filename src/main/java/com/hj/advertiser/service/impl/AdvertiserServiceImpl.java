@@ -131,78 +131,6 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			}
 		}
 
-		//调用广告商详情接口, 获取图片
-		List<FutureTask<Object>> futureList = new ArrayList<>(advertiserList.size());
-//		for (AdvertiserModel advertiserModel : advertiserList) {
-//			
-//			if (advertiserList.indexOf(advertiserModel) == 10) {
-//				break;
-//			}
-//			
-//			
-////			url = URLEncoder.encode(url, "UTF-8");
-//			/**
-//			 * https://map.baidu.com/
-//				?uid=03c79add94190a90d13ce30a
-//				&ugc_type=3
-//				&ugc_ver=1
-//				&qt=detailConInfo
-//				&device_ratio=2
-//				&compat=1
-//				&t=1593391457543
-//				&auth=%40bX3x26f9cN%3DwaDQETYbxMKJZ0MHD7T0uxHTBBTxEEBtComRB199Ay1uVt1GgvPUDZYOYIZuEt2gz4yYxGccZcuVtPWv3Guzxt58Jv7uUvhgMZSguxzBEHLNRTVtcEWe1GD8zv7u%40ZPuTtk1dK84yDF2CpFWEkmCimB14822WQ148AwAYYK53u%3D%3D8x1
-//			 */
-//			
-//			OkHttpClient okHttpClient = new OkHttpClient();
-//			final Request request = new Request.Builder()
-//					.url("")
-//					.get()
-//			        .build();
-//			final Call call = okHttpClient.newCall(request);
-//			try {
-//				Response response = call.execute();
-//				String bodyString = response.body().string();
-////				System.out.println(bodyString);
-//				JSONObject parseObject = JSON.parseObject(bodyString);
-//				//content -> ext -> detail_info -> vs_content -> invisible -> bigdata -> photo_album[] -> url
-//				JSONArray jsonArray = parseObject.getJSONObject("content")
-//				.getJSONObject("ext")
-//				.getJSONObject("detail_info")
-//				.getJSONObject("vs_content")
-//				.getJSONObject("invisible")
-//				.getJSONObject("bigdata")
-//				.getJSONArray("photo_album");
-//				if (jsonArray != null) {
-//					for (Object object : jsonArray) {
-//						JSONObject jsonObject = (JSONObject) object;
-//						String imgUrl = jsonObject.getString("url");
-//						System.out.println(imgUrl);
-//					}
-//				}
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-////			new Thread(new Runnable() {
-////			    @Override
-////			    public void run() {
-////			    }
-////			}).start();
-//			
-////			FutureTask<Object> task = new FutureTask<>(()-> {
-////				return null;
-////			});
-////			futureList.add(task);
-//		}
-		
-		//异步执行所有获取广告商详情信息
-		//注: 需要等到每家广告商的信息都获取到之后才往继续往下走
-//		for (FutureTask<Object> futureTask : futureList) {
-//			try {
-//				futureTask.get();
-//			} catch (InterruptedException | ExecutionException e) {
-//				e.printStackTrace();
-//			}
-//		}
 		return advertiserList;
 	}
 
@@ -292,11 +220,19 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			center.setUpdatedBy("黄炯");
 			center.setCreatedTime(new Date());
 			center.setUpdatedTime(new Date());
-			//添加一条搜索中心点,主键回填
-			try {
-				searchMapper.insertSearchCenter(center);
-			} catch (DuplicateKeyException e) {
-				searchMapper.updateSearchCenterSelective(center);
+			//判断是否已经存在
+			SearchCenter centerExisted = searchMapper.selectSearchCenterByBdUid(center.getCenterBdUid());
+			if (centerExisted != null) {
+				center.setSearchCenterId(centerExisted.getSearchCenterId());
+				//TODO 更新中心点
+			} else {
+				//添加一条搜索中心点,主键回填
+				try {
+					searchMapper.insertSearchCenter(center);
+				} catch (Exception e) {
+					System.err.println(file.getAbsolutePath() + "搜索中心点添加失败:" + e.getMessage());
+					continue;
+				}
 			}
 			
 			//- 搜索关键字
@@ -311,11 +247,24 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			keywords.setCreatedTime(new Date());
 			keywords.setUpdatedBy("黄炯");
 			keywords.setUpdatedTime(new Date());
-			//添加一条搜索关键字,主键回填
-			try {
-				searchMapper.insertSearchKeywords(keywords);
-			} catch (DuplicateKeyException e) {
+			//关键字是否已经存在
+			SearchKeywords keywordsExisted = searchMapper.selectSearchKeywordsByKeywords(keywords.getKeywords());
+			if (keywordsExisted != null) {
+//				try {
+//					searchMapper.updateSearchKeywordsSelective(keywords);
+//				} catch (Exception e) {
+					//更新失败只记录, 继续往下走而不是continue
+//				}
 				searchMapper.updateSearchKeywordsSelective(keywords);
+				keywords.setSearchKeywordsId(keywordsExisted.getSearchKeywordsId());
+			} else {
+				try {
+					//添加一条搜索关键字,主键回填
+					searchMapper.insertSearchKeywords(keywords);
+				} catch (Exception e) {
+					System.err.println(file.getAbsolutePath() + "搜索关键字添加失败:" + e.getMessage());
+					continue;
+				}
 			}
 			
 			//- 搜索记录
@@ -324,8 +273,13 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			action.setSearchKeywordsId(keywords.getSearchKeywordsId());
 			action.setCreatedBy("黄炯");
 			action.setCreatedTime(new Date());
-			//添加一条搜索记录,主键回填
-			searchMapper.insertSearchAction(action);
+			try {
+				//添加一条搜索记录,主键回填
+				searchMapper.insertSearchAction(action);
+			} catch (Exception e) {
+				System.err.println(file.getAbsolutePath() + "搜索记录添加失败:" + e.getMessage());
+				continue;
+			}
 			
 			//- 搜索结果列表
 			String auth = jsonObj.getJSONObject("result").getString("auth");
@@ -375,8 +329,8 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			System.out.println("搜索中心点:" + JSON.toJSONString(center, true));
 			System.out.println("搜索关键字:" + JSON.toJSONString(keywords, true));
 			System.out.println("搜索记录:" + JSON.toJSONString(action, true));
-			System.out.println("搜索结果列表:" + JSON.toJSONString(resultList, true));
-			System.out.println("处理后的广告商列表:" + JSON.toJSONString(advertiserList, true));
+//			System.out.println("搜索结果列表:" + JSON.toJSONString(resultList, true));
+//			System.out.println("处理后的广告商列表:" + JSON.toJSONString(advertiserList, true));
 			System.out.println(file.getAbsolutePath() + "==================================");
 		}
 

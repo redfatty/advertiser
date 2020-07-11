@@ -24,14 +24,14 @@ class LedAdvertiserApplicationTests {
 	void contextLoads() {
 	}
 	
-	@Test
-	void foo() throws IOException {
-		List<AdvertiserModel> list = advertiserService.getAdvertiserListFromLocal();
-		for (AdvertiserModel advertiserModel : list) {
-			ResultModel resultModel = advertiserService.insertOrUpdateAdvertiser(advertiserModel);
-			System.out.println(JSON.toJSONString(resultModel));
-		}
-	}
+//	@Test
+//	void foo() throws IOException {
+//		List<AdvertiserModel> list = advertiserService.getAdvertiserListFromLocal();
+//		for (AdvertiserModel advertiserModel : list) {
+////			ResultModel resultModel = advertiserService.insertOrUpdateAdvertiser(advertiserModel);
+//			System.out.println(JSON.toJSONString(resultModel));
+//		}
+//	}
 	
 	
 	@Test

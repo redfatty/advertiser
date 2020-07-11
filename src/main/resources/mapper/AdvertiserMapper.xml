@@ -13,6 +13,13 @@
 		<result property="addressNorm"       column="address_norm" ></result>
 		<result property="defaultImgUrl"    column="default_img_url" ></result>
 		<result property="albumImgUrls"    column="album_img_urls" typeHandler="org.apache.ibatis.type.ArrayTypeHandler"></result>
+		
+		<result property="provinceCode"      column="province_code" ></result>
+		<result property="cityCode"      column="city_code" ></result>
+		<result property="areaCode"      column="area_code" ></result>
+		<result property="provinceCodeBd"      column="province_code_bd" ></result>
+		<result property="cityCodeBd"      column="city_code_bd" ></result>
+		<result property="areaCodeBd"      column="area_code_bd" ></result>
 		<result property="provinceName"      column="province_name" ></result>
 		<result property="cityName"          column="city_name" ></result>
 		<result property="areaName"          column="area_name" ></result>
@@ -21,6 +28,8 @@
 
 	<select id="selectAdvertiserTest" resultMap="advertiserResultMap">
   		select * from advertiser
+		ORDER BY 
+		city_code, area_code, advertiser_id
   	</select>
 
 	<update id="updateImgTel" parameterType="com.hj.advertiser.model.UpdateAdvertiserImgPhoneInputModel">
@@ -40,6 +49,12 @@
 			address_norm,
 			default_img_url,
 			album_img_urls,
+			province_code,
+			city_code,
+			area_code,
+			province_code_bd,
+			city_code_bd,
+			area_code_bd,
 			province_name,
 			city_name,
 			area_name,
@@ -55,6 +70,12 @@
 			#{addressNorm},
 			#{defaultImgUrl},
 			#{albumImgUrls, typeHandler = org.apache.ibatis.type.ArrayTypeHandler},
+			#{provinceCode},
+			#{cityCode},
+			#{areaCode},
+			#{provinceCodeBd},
+			#{cityCodeBd},
+			#{areaCodeBd},
 			#{provinceName},
 			#{cityName},
 			#{areaName},
@@ -92,6 +113,24 @@
 			</if>
 			<if test="albumImgUrls != null and albumImgUrls.length > 0">
 				album_img_urls = #{albumImgUrls, typeHandler = org.apache.ibatis.type.ArrayTypeHandler},
+			</if>
+			<if test="provinceCode != null and provinceCode.length > 0">
+				province_code = #{provinceCode},
+			</if>
+			<if test="cityCode != null and cityCode.length > 0">
+				city_code = #{cityCode},
+			</if>
+			<if test="areaCode != null and areaCode.length > 0">
+				area_code = #{areaCode},
+			</if>
+			<if test="provinceCodeBd != null and provinceCodeBd.length > 0">
+				province_code_bd = #{provinceCodeBd},
+			</if>
+			<if test="cityCodeBd != null and cityCodeBd.length > 0">
+				city_code_bd = #{cityCodeBd},
+			</if>
+			<if test="areaCodeBd != null and areaCodeBd.length > 0">
+				area_code_bd = #{areaCodeBd},
 			</if>
 			<if test="provinceName != null and provinceName !=''">
 				province_name = #{provinceName},
