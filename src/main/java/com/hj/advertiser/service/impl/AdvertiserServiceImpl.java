@@ -314,7 +314,8 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 					result.setSearchActionId(action.getSearchActionId());
 					result.setBdUid(advertiserModel.getBdUid());
 					result.setAdvertiserName(advertiserModel.getName());
-					result.setDistance(jsonItem.getInteger("dis"));
+					Integer dis = jsonItem.getInteger("dis");
+					result.setDistance(dis == null ? -1 : dis);
 					result.setCreatedBy("黄炯");
 					result.setCreatedTime(new Date());
 					resultList.add(result);
@@ -326,12 +327,11 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			}
 			
 			System.out.println(file.getAbsolutePath() + "的数据初始化完成");
-			System.out.println("搜索中心点:" + JSON.toJSONString(center, true));
-			System.out.println("搜索关键字:" + JSON.toJSONString(keywords, true));
-			System.out.println("搜索记录:" + JSON.toJSONString(action, true));
+			System.out.println("搜索中心点:" + JSON.toJSONString(center.getCenterName(), true));
+			System.out.println("搜索关键字:" + JSON.toJSONString(keywords.getKeywords(), true));
+//			System.out.println("搜索记录:" + JSON.toJSONString(action, true));
 //			System.out.println("搜索结果列表:" + JSON.toJSONString(resultList, true));
 //			System.out.println("处理后的广告商列表:" + JSON.toJSONString(advertiserList, true));
-			System.out.println(file.getAbsolutePath() + "==================================");
 		}
 
 		return null;
