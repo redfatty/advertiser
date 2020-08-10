@@ -1,0 +1,32 @@
+{
+	"total":2,
+	"param":{
+		"keywords":"广告,图文,招牌,打印,复印,发光字,灯光,亮化,电子显示屏",
+		"center":"青山桥镇",
+		"center_gps":"27.497703,112.581272"
+	},
+	"message":"ok",
+	"results":[
+		{
+			"area":"湘潭县",
+			"uid":"96525cb6bddea3ba3a04b1e9",
+			"address":"湘潭市湘潭县",
+			"province":"湖南省",
+			"city":"湘潭市",
+			"detail_info":{
+				"detail_url":"http://api.map.baidu.com/place/detail?uid=96525cb6bddea3ba3a04b1e9&output=html&source=placeapi_v2",
+				"distance":533,
+				"children":[],
+				"tag":"购物;家电数码",
+				"type":"shopping"
+			},
+			"name":"打印机电脑监控",
+			"location":{
+				"lng":112.577231,
+				"lat":27.500892
+			},
+			"detail":1
+		}
+	],
+	"status":0
+}

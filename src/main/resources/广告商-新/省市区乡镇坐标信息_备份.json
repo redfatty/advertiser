@@ -1,0 +1,43 @@
+[
+	{
+		"province": "湖南省",
+		"province_code": "430000",
+		"boundary": {
+			"north": "xx",
+			"south": "xx",
+			"weast": "xx",
+			"east": "xx"
+		},
+		"city_list": [
+			{
+				"city": "xxx",
+				"city_code": "xxx",
+				"boundary": {
+					"north": "xx",
+					"south": "xx",
+					"weast": "xx",
+					"east": "xx"
+				},
+				"area_list": [
+					{
+						"area": "xxx",
+						"area_code": "xxx",
+						"boundary": {
+							"north": "xx",
+							"south": "xx",
+							"weast": "xx",
+							"east": "xx"
+						},
+						"town_list": [
+							{
+								"town": "xx",
+								"center_point": "xx",
+								"is_gov_resident":true
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+]

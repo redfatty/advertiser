@@ -170,23 +170,23 @@ class TestTest {
 	}
 	
 	
-//	@Test
+	@Test
 	void getAdvertiserDetailTest() throws UnsupportedEncodingException  {
 		String url = "https://map.baidu.com/?uid=3a194c3fc687fb08d4851f6e&ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=2&compat=1&t=1593355370341&auth=5XvI2FNFbVbz1YDRDvHESbS%40Lv74BNCUuxHTBBHHzEHtComRB199Ay1uVt1GgvPUDZYOYIZuxtdw8E62qvFu2gz4yYxGccZcuVtPWv3GuBLt%40jUIgHUvhgMZSguxzBEHLNRTVtcEWe1GD8zv7u%40ZPuxEtr2%3DGlnDjnCENZHHKKXRRBjnOOAEZzrZZWuN";
 		url = "https://map.baidu.com/?uid=03c79add94190a90d13ce30a&ugc_type=3&ugc_ver=1&qt=detailConInfo&device_ratio=2&compat=1&t=1593386253632&auth=%40bX3x26f9cN%3DwaDQETYbxMKJZ0MHD7T0uxHTBBRLzzTtzljPyBYYxy1uVt1GgvPUDZYOYIZuVt1cv3uVtGccZcuVtPWv3GuztQZ3wWvUvhgMZSguxzBEHLNRTVtcEWe1GD8zv7u%40ZPuLtjAJzhjzgjyBKWEEUOBKWxwAYYK53fy9GUIsxA3wFkk0H3";
 		
 		String baseUrl = "https://map.baidu.com";
 		Map<String, String> urlParams = new HashMap<>();
-		String uid = "03c79add94190a90d13ce30a";
+		String uid = "b723144f4f0f4956a5da397d"; 
 		String auth = "%40bX3x26f9cN%3DwaDQETYbxMKJZ0MHD7T0uxHTBBTxEEBtComRB199Ay1uVt1GgvPUDZYOYIZuEt2gz4yYxGccZcuVtPWv3Guzxt58Jv7uUvhgMZSguxzBEHLNRTVtcEWe1GD8zv7u%40ZPuTtk1dK84yDF2CpFWEkmCimB14822WQ148AwAYYK53u%3D%3D8x1";
 		urlParams.put("uid", uid);
-		urlParams.put("auth", auth);
+//		urlParams.put("auth", auth);
 		urlParams.put("ugc_type", "3");
 		urlParams.put("ugc_ver", "1");
 		urlParams.put("qt", "detailConInfo");
 		urlParams.put("device_ratio", "2");
 		urlParams.put("compat", "1");
-		urlParams.put("t", String.valueOf(System.currentTimeMillis()));
+//		urlParams.put("t", String.valueOf(System.currentTimeMillis()));
 		
 		url = UrlUtils.joinParams(baseUrl, urlParams);
 //		url = URLEncoder.encode(url, "UTF-8");

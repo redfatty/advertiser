@@ -1,0 +1,32 @@
+{
+	"total":1,
+	"param":{
+		"keywords":"广告,图文,招牌,打印,复印,发光字,灯光,亮化,电子显示屏",
+		"center":"排头乡",
+		"center_gps":"27.558123,112.721922"
+	},
+	"message":"ok",
+	"results":[
+		{
+			"area":"湘潭县",
+			"uid":"038f14f4bd1b2af70bb93a0e",
+			"address":"018县道东50米",
+			"province":"湖南省",
+			"city":"湘潭市",
+			"detail_info":{
+				"detail_url":"http://api.map.baidu.com/place/detail?uid=038f14f4bd1b2af70bb93a0e&output=html&source=placeapi_v2",
+				"distance":137,
+				"children":[],
+				"tag":"公司企业;公司",
+				"type":"enterprise"
+			},
+			"name":"添添广告",
+			"location":{
+				"lng":112.721918,
+				"lat":27.559362
+			},
+			"detail":1
+		}
+	],
+	"status":0
+}

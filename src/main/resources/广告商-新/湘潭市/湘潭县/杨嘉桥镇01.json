@@ -1,0 +1,32 @@
+{
+	"total":1,
+	"param":{
+		"keywords":"广告,图文,招牌,打印,复印,发光字,灯光,亮化,电子显示屏",
+		"center":"杨嘉桥镇",
+		"center_gps":"27.777246,112.793394"
+	},
+	"message":"ok",
+	"results":[
+		{
+			"area":"湘潭县",
+			"uid":"585808034f58a7a517948e6d",
+			"address":"湖南省湘潭县杨嘉桥镇铺子岭X108",
+			"province":"湖南省",
+			"city":"湘潭市",
+			"detail_info":{
+				"detail_url":"http://api.map.baidu.com/place/detail?uid=585808034f58a7a517948e6d&output=html&source=placeapi_v2",
+				"distance":2580,
+				"children":[],
+				"tag":"公司企业;公司",
+				"type":"enterprise"
+			},
+			"name":"杨河广告印刷",
+			"location":{
+				"lng":112.819079,
+				"lat":27.772536
+			},
+			"detail":1
+		}
+	],
+	"status":0
+}

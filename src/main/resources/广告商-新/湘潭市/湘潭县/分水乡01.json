@@ -1,0 +1,33 @@
+{
+	"total":3,
+	"param":{
+		"keywords":"广告,图文,招牌,打印,复印,发光字,灯光,亮化,电子显示屏",
+		"center":"分水乡",
+		"center_gps":"27.554676,112.60117"
+	},
+	"message":"ok",
+	"results":[
+		{
+			"area":"湘潭县",
+			"uid":"db152d2a9db2852b0d3dda25",
+			"address":"湘潭市湘潭县",
+			"province":"湖南省",
+			"city":"湘潭市",
+			"detail_info":{
+				"detail_url":"http://api.map.baidu.com/place/detail?uid=db152d2a9db2852b0d3dda25&output=html&source=placeapi_v2",
+				"distance":2482,
+				"children":[],
+				"tag":"生活服务;图文快印店",
+				"type":"life",
+				"image_num":"1"
+			},
+			"name":"照相理发复印",
+			"location":{
+				"lng":112.610185,
+				"lat":27.533828
+			},
+			"detail":1
+		}
+	],
+	"status":0
+}

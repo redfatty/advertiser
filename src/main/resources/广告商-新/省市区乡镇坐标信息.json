@@ -1,0 +1,43 @@
+[
+	{
+		"province": "湖南省",
+		"province_code": "430000",
+		"boundary": {
+			"north": "110.832899,30.135414",
+			"south": "111.541195,24.630605",
+			"weast": "108.804597,27.077474",
+			"east":  "114.273193,28.317934"
+		},
+		"city_list": [
+			{
+				"city": "长沙市",
+				"city_code": "430100",
+				"boundary": {
+					"north": "xx",
+					"south": "xx",
+					"weast": "xx",
+					"east": "xx"
+				},
+				"area_list": [
+					{
+						"area": "雨花区",
+						"area_code": "xxxx",
+						"boundary": {
+							"north": "113.063201,28.231315",
+							"south": "xx",
+							"weast": "xx",
+							"east": "xx"
+						},
+						"town_list": [
+							{
+								"town": "xx",
+								"center_point": "xx",
+								"is_gov_resident":true
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+]
